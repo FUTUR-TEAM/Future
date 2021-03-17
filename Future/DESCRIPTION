@@ -1,0 +1,10 @@
+Package: Future
+Type: Package
+Title: Future
+Version: 0.0.1
+Author: Karolina Scigocka
+Maintainer: Karolina Scigocka <scigocka.karolina@gmail.com>
+Description: Backend functions for shiny app Future.
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
