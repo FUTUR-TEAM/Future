@@ -4,20 +4,23 @@
 \alias{BMI}
 \title{BMI}
 \usage{
-BMI(waga, wzrost, plec = c("kobieta", "mezczyzna"))
+BMI(weight, growth, sex = c("female", "male"))
 }
 \arguments{
-\item{waga}{numeric, waga osoby, dla której liczymy BMI wyrażona w kg}
+\item{weight}{numeric, weight of the person for whom we calculate the BMI
+expressed in kg}
 
-\item{wzrost}{numeric, wzrost osoby, dla której liczymy BMI wyrażony w metrach}
+\item{growth}{numeric, growth of the person for whom we calculate the BMI
+expressed in meters}
 
-\item{plec}{string, plec osoby, dla której liczymy BMI. Możliwe wartości dla parametru: \code{kobieta}, \code{mezczyzna}}
+\item{sex}{string, sex of the person for whom we calculate BMI. Possible
+values for the parameter: \code{female}, \code{male}}
 }
 \description{
-Funkcja pomocnicza do liczenia wskaźnika BMI.
+Function for calculating BMI.
 }
 \examples{
 BMI(100, 1.7)
-BMI(85, 1.9, "kobieta")
+BMI(85, 1.9, "female")
 
 }
