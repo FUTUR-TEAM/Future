@@ -1,42 +1,41 @@
 #' @title BMI
 #'
-#' @description Funkcja pomocnicza do liczenia wskaźnika BMI.
+#' @description Function for calculating BMI.
 #'
-#' @param waga numeric, waga osoby, dla której liczymy BMI wyrażona w kg
-#' @param wzrost numeric, wzrost osoby, dla której liczymy BMI wyrażony w metrach
-#' @param plec string, plec osoby, dla której liczymy BMI. Możliwe wartości dla parametru: \code{kobieta}, \code{mezczyzna}
+#' @param weight numeric, weight of the person for whom we calculate the BMI
+#' expressed in kg
+#' @param growth numeric, growth of the person for whom we calculate the BMI
+#' expressed in meters
+#' @param sex string, sex of the person for whom we calculate BMI. Possible
+#' values for the parameter: \code{female}, \code{male}
 #'
 #' @examples
 #' BMI(100, 1.7)
-#' BMI(85, 1.9, "kobieta")
+#' BMI(85, 1.9, "female")
 #'
 #' @export
-BMI <- function(waga, wzrost, plec = c("kobieta", "mezczyzna")) {
-  if (!is.numeric(waga)) {
-    stop("waga musi byc wartosciaa liczbowa")
+BMI <- function(weight, growth, sex = c("female", "male")) {
+  if (!is.numeric(weight)) {
+    stop("weight must be numeric")
   }
-  if (!is.numeric(wzrost)) {
-    stop("wzrost musi byc wartosciaa liczbowa")
+  if (!is.numeric(growth)) {
+    stop("growth must be numeric")
   }
 
-  plec <- match.arg(plec)
+  sex <- match.arg(sex)
 
-  # if (!(is.character(plec) || is.null(plec))) {
-  #   stop("wpisz kobieta lub mezczyzna")
-  # }
+  BMI <- weight / growth^2
 
-  BMI <- waga / wzrost^2
-
-  sylwetka <- if (BMI < 18.5) {
-    "niedowaga"
+  figure <- if (BMI < 18.5) {
+    "underweight"
   } else if (BMI < 25) {
-    "optimum"
+    "normal"
   } else if (BMI < 30){
-    "nadwaga"
+    "overweight"
   } else if (BMI >= 30){
-    "otyłosc"
+    "obese"
   }
 
-  return(list(BMI = BMI, sylwetka = sylwetka))
+  return(list(BMI = BMI, figure = figure))
 }
 
