@@ -58,10 +58,24 @@ energy_value_of_the_product_per_100 <- function(protein, fat, carbohydrates, fib
 #'
 #' @export
 energy_total <- function(weight_of_product, protein, fat, carbohydrates, fiber = 0) {
+   if (!is.numeric(weight_of_product)){
+      stop("weight_of_product must be numeric")
+   }
+   if (!is.numeric(protein)){
+      stop("protein must be numeric")
+   }
+   if (!is.numeric(fat)){
+      stop("fat must be numeric")
+   }
+   if (!is.numeric(carbohydrates)){
+      stop("carbohydrates must be numeric")
+   }
+   if (!is.numeric(fiber)){
+      stop("fiber must be numeric")
+   }
    energy_per_100 <- energy_value_of_the_product_per_100(protein, fat, carbohydrates, fiber)
    energy_per_100 * weight_of_product / 100
 }
-#TODO: dopisac asserty
 
 #' @title Energy value of the product for the given weight
 #'
@@ -74,7 +88,6 @@ energy_total <- function(weight_of_product, protein, fat, carbohydrates, fiber =
 #' energy_of_product("Kawior", 50)
 #'
 #' @export
-#TODO: dokumentacja
 energy_of_product <- function(product, weight){
    if (!is.character(product)){
       stop("product must be string")
