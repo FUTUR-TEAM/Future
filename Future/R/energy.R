@@ -30,11 +30,11 @@ energy_value_of_the_product_per_100 <- function(protein, fat, carbohydrates, fib
    if (!is.numeric(fiber)){
       stop("fiber must be numeric")
    }
-   pr <- protein * 4
-   f <- fat * 9
-   c <- carbohydrates * 4
-   fi <- fiber * -2
-   sum(pr, f, c, fi)
+   protein_energy <- protein * 4
+   fat_energy <- fat * 9
+   carbohydrates_energy <- carbohydrates * 4
+   fiber_energy <- fiber * -2
+   sum(protein_energy, fat_energy, carbohydrates_energy, fiber_energy)
 }
 
 #' @title Total energy value of the product
@@ -95,13 +95,24 @@ energy_of_product <- function(product, weight){
    if (!is.numeric(weight)){
       stop("weight must be numeric")
    }
-   energy_table <- read.table(system.file("Zeszyt1.tsv", package = "Future"), sep = "\t", header = T)
-   total_product_info <- energy_table %>% filter(Nazwa %in% product)
+
+   total_product_info <- read.table(system.file("caloric_table.txt", package = "Future"), sep = ";", header = T) %>%
+      rename("Protein" = "Bialko", "Fat" = "Tluszcz", "Carbohydrates" = "Weglowodany") %>%
+      filter(Nazwa %in% product)
    energy <- energy_total(weight_of_product = weight,
-                          protein = as.numeric(total_product_info$Białko..g.),
-                          fat = as.numeric(total_product_info$Tłuszcz..g.),
-                          carbohydrates = as.numeric(total_product_info$Węglowodany..g.),
+                          protein = as.numeric(total_product_info$Protein),
+                          fat = as.numeric(total_product_info$Fat),
+                          carbohydrates = as.numeric(total_product_info$Carbohydrates),
                           fiber = 0)
 
    return(energy)
+}
+
+energy_of_meal <- function(list_of_products, weight_of_products){
+   whole_energy <- 0
+   for (i in 1:length(list_of_products)) {
+      energy_of_i <- energy_of_product(list_of_products[[i]], weight_of_products[[i]])
+      whole_energy <- sum(whole_energy, energy_of_i)
+   }
+   return(whole_energy)
 }
