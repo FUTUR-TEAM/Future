@@ -116,3 +116,36 @@ energy_of_meal <- function(list_of_products, weight_of_products){
    }
    return(whole_energy)
 }
+
+
+makronutrients <- function(product, weight){
+   if (!is.character(product)){
+      stop("product must be string")
+   }
+   if (!is.numeric(weight)){
+      stop("weight must be numeric")
+   }
+
+   product_info <- read.table(system.file("caloric_table.txt", package = "Future"), sep = ";", header = T) %>%
+      rename("Protein" = "Bialko", "Fat" = "Tluszcz", "Carbohydrates" = "Weglowodany") %>%
+      filter(Nazwa %in% product)
+   makro_info <- list(weight_of_product = weight,
+                      protein = as.numeric(product_info$Protein) * weight / 100,
+                      fat = as.numeric(product_info$Fat) * weight / 100,
+                      carbohydrates = as.numeric(product_info$Carbohydrates) * weight / 100
+   )
+   return(makro_info)
+}
+
+makronutrients_of_meal <- function(list_of_products, weight_of_products){
+   df_makro <- data.frame()
+   for (i in 1:length(list_of_products)) {
+      makro <- makronutrients(list_of_products[[i]], weight_of_products[[i]])
+      df_makro <- rbind(df_makro, makro)
+   }
+   return(list(
+      protein = sum(df_makro$protein),
+      fat = sum(df_makro$fat),
+      carbohydrates = sum(df_makro$carbohydrates)
+      ))
+}
