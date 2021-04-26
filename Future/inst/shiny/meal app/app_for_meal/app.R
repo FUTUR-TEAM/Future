@@ -177,6 +177,7 @@ ui <-  dashboardPage(header, sidebar, body)
 
 
 server <- function(input, output, session) {
+    shinyjs::addClass(selector = "body", class = "sidebar-collapse")
 
     product_table <-
         read.table(
