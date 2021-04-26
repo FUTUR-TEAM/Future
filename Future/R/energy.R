@@ -108,6 +108,21 @@ energy_of_product <- function(product, weight){
    return(energy)
 }
 
+#' @title Total energy value of the meal
+#'
+#' @description Function for calculating the total energy value of a meal
+#'
+#' @param list_of_products list, list of the names of the products added to the
+#' preparation of the meal
+#' @param weight_of_products list, list of weights of the products added to the
+#' preparation of the meal
+#'
+#' @examples
+#' list_of_products <- list("Kawior", "Kawior")
+#' weight_of_products <- list(50, 100)
+#' energy_of_meal(list_of_products, weight_of_products)
+#'
+#' @export
 energy_of_meal <- function(list_of_products, weight_of_products){
 
    if (!is.list(list_of_products)){
@@ -126,7 +141,6 @@ energy_of_meal <- function(list_of_products, weight_of_products){
       stop("list_of_products and weight_of_products must be the same length")
    }
 
-
    whole_energy <- 0
    for (i in 1:length(list_of_products)) {
       energy_of_i <- energy_of_product(list_of_products[[i]], weight_of_products[[i]])
@@ -135,34 +149,63 @@ energy_of_meal <- function(list_of_products, weight_of_products){
    return(whole_energy)
 }
 
-makronutrients <- function(product, weight){
-   if (!is.character(product)){
-      stop("product must be string")
-   }
-   if (!is.numeric(weight)){
-      stop("weight must be numeric")
-   }
+#' @title Amount of macronutrients in product
+#'
+#' @description Function for calculating amount of macronutrients in product
+#'
+#' @param product string, name of used product
+#' @param weight numeric, weight of used product
+#'
+#' @examples
+#' macronutrients("Kawior", 50)
+#'
+#' @export
+macronutrients <- function(product, weight){
+
+   assertthat::assert_that(assertthat::is.string(product),
+                           msg = "product must be string")
+   assertthat::assert_that(assertthat::is.number(weight),
+                           msg = "weight must be numeric")
 
    product_info <- read.table(system.file("caloric_table.txt", package = "Future"), sep = ";", header = T) %>%
       rename("Protein" = "Bialko", "Fat" = "Tluszcz", "Carbohydrates" = "Weglowodany") %>%
       filter(Nazwa %in% product)
-   makro_info <- list(weight_of_product = weight,
+   macro_info <- list(product_name = product,
+                      weight_of_product = weight,
                       protein = as.numeric(product_info$Protein) * weight / 100,
                       fat = as.numeric(product_info$Fat) * weight / 100,
                       carbohydrates = as.numeric(product_info$Carbohydrates) * weight / 100
    )
-   return(makro_info)
+   return(macro_info)
 }
 
-makronutrients_of_meal <- function(list_of_products, weight_of_products){
-   df_makro <- data.frame()
+#' @title Amount of macronutrients in the prepared meal
+#'
+#' @description Function for calculating amount of macronutrients in prepard meal
+#'
+#' @param list_of_products list, list of the names of the products used to prepare the meal
+#' @param weight_of_products list, list of weights of the products used to prepare the meal
+#'
+#' @examples
+#' list_of_products <- list("Kawior", "Kawior")
+#' weight_of_products <- list(50, 100)
+#' macronutrients_of_meal(list_of_products, weight_of_products)
+#'
+#' @export
+macronutrients_of_meal <- function(list_of_products, weight_of_products){
+
+   checkmate::assert_list(list_of_products, min.len = 1)
+   checkmate::assert_true(all(sapply(list_of_products, class) == "character"))
+
+   checkmate::assert_list(weight_of_products, min.len = 1)
+   checkmate::assert_true(all(sapply(weight_of_products, class) == "numeric"))
+
+   checkmate::assert_set_equal(length(list_of_products), length(weight_of_products))
+
+   df_macro <- data.frame()
    for (i in 1:length(list_of_products)) {
-      makro <- makronutrients(list_of_products[[i]], weight_of_products[[i]])
-      df_makro <- rbind(df_makro, makro)
+      macro <- macronutrients(list_of_products[[i]], weight_of_products[[i]])
+      df_macro <- rbind(df_macro, macro)
    }
-   return(list(
-      protein = sum(df_makro$protein),
-      fat = sum(df_makro$fat),
-      carbohydrates = sum(df_makro$carbohydrates)
-      ))
+   return(df_macro)
 }
