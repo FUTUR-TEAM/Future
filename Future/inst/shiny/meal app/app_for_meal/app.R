@@ -18,7 +18,6 @@ body <- dashboardBody(
                               choices = "",
                               options = list(`live-search` = TRUE)
                           )),
-
                    column(4,
                           numericInput(
                               inputId = "weight01",
@@ -101,9 +100,7 @@ body <- dashboardBody(
                        color = "danger"
                    ),
                ))),
-               hidden(div(
-                   id = "box04",
-                   box(
+               hidden(div(id = "box04", box(
                        width = 12,
                        column(
                            6,
@@ -136,11 +133,9 @@ body <- dashboardBody(
                            style = "jelly",
                            color = "danger"
                        ),
-
                ))),
-               hidden(div(
-                   id = "box05",
-                   box(width = 12,
+               hidden(div(id = "box05", box(
+                       width = 12,
                        column(
                            6,
                            pickerInput(
@@ -165,9 +160,7 @@ body <- dashboardBody(
                               style = "jelly",
                               color = "danger"
                           ),
-
                ))),
-
         ),
         column(5, offset = 1, shinyWidgets::actionBttn(inputId = "click",
                                                        label = "Oblicz",
