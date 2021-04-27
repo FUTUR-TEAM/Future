@@ -52,7 +52,7 @@ testthat::test_that(desc = "energy_of_product works!", {
 testthat::test_that(desc = "energy_of_product has expected error messeges", {
 
   testthat::expect_error(energy_of_product(25, 50), "product must be string")
-  testthat::expect_error(energy_of_product("Kawior", "50"), "weight must be numeric")
+  testthat::expect_error(energy_of_product("Kawior", "50"), "weight must be number")
 })
 
 testthat::test_that(desc = "energy_of_meal works!", {

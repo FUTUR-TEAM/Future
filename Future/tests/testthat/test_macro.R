@@ -38,32 +38,29 @@ testthat::test_that(desc = "macronutreints_of_meal has expected error messeges",
   weight_of_products <- list(50, 100)
   testthat::expect_error(
     macronutrients_of_meal(list_of_products, weight_of_products),
-    "Assertion on 'list_of_products' failed: Must be of type 'list', not 'character'.")
+    "list_of_products must be list")
 
   list_of_products <- list("Kawior", "Kawior")
   weight_of_products <- c(50, 100)
   testthat::expect_error(
     macronutrients_of_meal(list_of_products, weight_of_products),
-    "Assertion on 'weight_of_products' failed: Must be of type 'list', not 'double'")
+    "weight_of_products must be list")
 
   list_of_products <- list("Kawior", 50)
   weight_of_products <- list(50, 100)
   testthat::expect_error(
     macronutrients_of_meal(list_of_products, weight_of_products),
-    "Assertion on 'all(sapply(list_of_products, class) == \"character\")' failed: Must be TRUE",
-    fixed = TRUE)
+    "elements of list_of_products must be character")
 
   list_of_products <- list("Kawior", "Kawior")
   weight_of_products <- list(50, "100")
   testthat::expect_error(
     macronutrients_of_meal(list_of_products, weight_of_products),
-    "Assertion on 'all(sapply(weight_of_products, class) == \"numeric\")' failed: Must be TRUE",
-    fixed = TRUE)
+    "elements of weight_of_products must be numeric")
 
   list_of_products <- list("Kawior", "Kawior")
   weight_of_products <- list(50, 100, 100)
   testthat::expect_error(
     macronutrients_of_meal(list_of_products, weight_of_products),
-    "Assertion on 'length(list_of_products)' failed: Must be equal to set {'3'}, but is {'2'}.",
-    fixed = TRUE)
+    "list_of_products and weight_of_products must be the same length")
 })
