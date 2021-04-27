@@ -54,3 +54,47 @@ testthat::test_that(desc = "energy_of_product has expected error messeges", {
   testthat::expect_error(energy_of_product(25, 50), "product must be string")
   testthat::expect_error(energy_of_product("Kawior", "50"), "weight must be numeric")
 })
+
+testthat::test_that(desc = "energy_of_meal works!", {
+
+  list_of_products <- list("Kawior", "Kawior")
+  weight_of_products <- list(50, 100)
+  result <- energy_of_meal(list_of_products, weight_of_products)
+
+  testthat::expect_identical(length(list_of_products), length(weight_of_products))
+  testthat::expect_equal(length(result), 1)
+  testthat::expect_equal(result, 411)
+})
+
+testthat::test_that(desc = "energy_of_meal has expected error messeges", {
+
+  list_of_products <- c("Kawior")
+  weight_of_products <- list(50, 100)
+  testthat::expect_error(
+    energy_of_meal(list_of_products, weight_of_products),
+    "list_of_products must be list")
+
+  list_of_products <- list("Kawior", 50)
+  weight_of_products <- list(50, 100)
+  testthat::expect_error(
+    energy_of_meal(list_of_products, weight_of_products),
+    "elements of list_of_products must be character")
+
+  list_of_products <- list("Kawior", "Kawior")
+  weight_of_products <- c(50, 100)
+  testthat::expect_error(
+    energy_of_meal(list_of_products, weight_of_products),
+    "weight_of_products must be list")
+
+  list_of_products <- list("Kawior", "Kawior")
+  weight_of_products <- list(50, "100")
+  testthat::expect_error(
+    energy_of_meal(list_of_products, weight_of_products),
+    "elements of weight_of_products must be numeric")
+
+  list_of_products <- list("Kawior", "Kawior")
+  weight_of_products <- list(50, 100, 100)
+  testthat::expect_error(
+    energy_of_meal(list_of_products, weight_of_products),
+    "list_of_products and weight_of_products must be the same length")
+})
