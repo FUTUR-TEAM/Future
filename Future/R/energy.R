@@ -108,7 +108,39 @@ energy_of_product <- function(product, weight){
    return(energy)
 }
 
+#' @title Total energy value of the meal
+#'
+#' @description Function for calculating the total energy value of a meal
+#'
+#' @param list_of_products list, list of the names of the products added to the
+#' preparation of the meal
+#' @param weight_of_products list, list of weights of the products added to the
+#' preparation of the meal
+#'
+#' @examples
+#' list_of_products <- list("Kawior", "Kawior")
+#' weight_of_products <- list(50, 100)
+#' energy_of_meal(list_of_products, weight_of_products)
+#'
+#' @export
 energy_of_meal <- function(list_of_products, weight_of_products){
+
+   if (!is.list(list_of_products)){
+      stop("list_of_products must be list")
+   }
+   if (!all(sapply(list_of_products, class) == "character")){
+      stop("elements of list_of_products must be character")
+   }
+   if (!is.list(weight_of_products)){
+      stop("weight_of_products must be list")
+   }
+   if (!all(sapply(weight_of_products, class) == "numeric")){
+      stop("elements of weight_of_products must be numeric")
+   }
+   if (length(list_of_products) != length(weight_of_products)){
+      stop("list_of_products and weight_of_products must be the same length")
+   }
+
    whole_energy <- 0
    for (i in 1:length(list_of_products)) {
       energy_of_i <- energy_of_product(list_of_products[[i]], weight_of_products[[i]])
