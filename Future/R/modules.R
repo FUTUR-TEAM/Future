@@ -1,5 +1,8 @@
-
-
+#' @title Ui part of module for calculating energy of meal
+#'
+#' @param id character, shiny id
+#'
+#' @export
 mainModuleUI <- function(id){
 
    ns <- NS(id)
@@ -178,9 +181,22 @@ mainModuleUI <- function(id){
 
 }
 
-
+#' @title Server part of module for calculating energy of meal
+#'
+#' @description Module for adding products and their weights to the meal.
+#'
+#' @param input shiny input
+#' @param output shiny output
+#' @param session shiny session
+#'
+#' @export
 mainModule <- function(input, output, session){
-      shinyjs::addClass(selector = "body", class = "sidebar-collapse")
+
+   shinyjs::addClass(selector = "body", class = "sidebar-collapse")
+
+   rv <- reactiveValues()
+
+##### loading caloric table and updating inputs with data from table #####
 
       product_table <-
          read.table(
@@ -193,6 +209,8 @@ mainModule <- function(input, output, session){
       updatePickerInput(session = session, inputId = "product03", choices = c("", product_table$Nazwa))
       updatePickerInput(session = session, inputId = "product04", choices = c("", product_table$Nazwa))
       updatePickerInput(session = session, inputId = "product05", choices = c("", product_table$Nazwa))
+
+##### adding new products for the meal #####
 
       observeEvent(input$add01, {
          shinyjs::show("box02")
@@ -213,6 +231,8 @@ mainModule <- function(input, output, session){
          shinyjs::hide("add04")
          shinyjs::hide("remove04")
       })
+
+##### removing products from the meal #####
 
       observeEvent(input$remove02, {
          shinyjs::hide("box02")
@@ -243,10 +263,7 @@ mainModule <- function(input, output, session){
          updateNumericInput(inputId = "weight05", value = 0)
       })
 
-
-
-      rv <- reactiveValues()
-
+##### creating lists for calculating energy of meal
       observeEvent(input$click, {
          req(input$product01)
          rv$out <-
@@ -268,6 +285,7 @@ mainModule <- function(input, output, session){
             )
       })
 
+##### displaying energy of preparing meal
       output$kcalMeal <- renderText({
          validate(
             need(rv$out, message = "Wybierz produkt")
