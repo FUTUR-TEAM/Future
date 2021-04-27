@@ -30,7 +30,7 @@ macronutrients <- function(product, weight){
 
 #' @title Amount of macronutrients in the prepared meal
 #'
-#' @description Function for calculating amount of macronutrients in prepard meal
+#' @description Function for calculating amount of macronutrients in prepared meal
 #'
 #' @param list_of_products list, list of the names of the products used to prepare the meal
 #' @param weight_of_products list, list of weights of the products used to prepare the meal
