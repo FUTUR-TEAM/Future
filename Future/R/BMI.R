@@ -15,12 +15,8 @@
 #'
 #' @export
 BMI <- function(weight, growth, sex = c("female", "male")) {
-  if (!is.numeric(weight)) {
-    stop("weight must be numeric")
-  }
-  if (!is.numeric(growth)) {
-    stop("growth must be numeric")
-  }
+  assertthat::assert_that(is.numeric(weight), msg = "weight must be numeric")
+  assertthat::assert_that(is.numeric(growth), msg = "growth must be numeric")
 
   sex <- match.arg(sex)
 

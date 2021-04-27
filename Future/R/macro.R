@@ -43,13 +43,16 @@ macronutrients <- function(product, weight){
 #' @export
 macronutrients_of_meal <- function(list_of_products, weight_of_products){
 
-  checkmate::assert_list(list_of_products, min.len = 1)
-  checkmate::assert_true(all(sapply(list_of_products, class) == "character"))
-
-  checkmate::assert_list(weight_of_products, min.len = 1)
-  checkmate::assert_true(all(sapply(weight_of_products, class) == "numeric"))
-
-  checkmate::assert_set_equal(length(list_of_products), length(weight_of_products))
+  assertthat::assert_that(is.list(list_of_products),
+                          msg = "list_of_products must be list")
+  assertthat::assert_that(all(sapply(list_of_products, class) == "character"),
+                          msg = "elements of list_of_products must be character")
+  assertthat::assert_that(is.list(weight_of_products),
+                          msg = "weight_of_products must be list")
+  assertthat::assert_that(all(sapply(weight_of_products, class) == "numeric"),
+                          msg = "elements of weight_of_products must be numeric")
+  assertthat::assert_that(length(list_of_products) == length(weight_of_products),
+                          msg = "list_of_products and weight_of_products must be the same length")
 
   df_macro <- data.frame()
   for (i in 1:length(list_of_products)) {
