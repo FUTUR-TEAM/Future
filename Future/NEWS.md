@@ -1,3 +1,7 @@
+0.0.5
+
+- convert shiny app for calculating energy_of_meal to module
+
 0.0.4
 
 - added functions: macronutrietns and helper functions
