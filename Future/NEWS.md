@@ -1,3 +1,8 @@
+0.0.5
+
+- added one type of asserts to each functions
+- updated documentation
+
 0.0.4
 
 - added functions: macronutrietns and helper functions
