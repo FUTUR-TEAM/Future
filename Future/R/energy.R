@@ -18,18 +18,16 @@
 #'
 #' @export
 energy_value_of_the_product_per_100 <- function(protein, fat, carbohydrates, fiber = 0) {
-   if (!is.numeric(protein)){
-      stop("protein must be numeric")
-   }
-   if (!is.numeric(fat)){
-      stop("fat must be numeric")
-   }
-   if (!is.numeric(carbohydrates)){
-      stop("carbohydrates must be numeric")
-   }
-   if (!is.numeric(fiber)){
-      stop("fiber must be numeric")
-   }
+
+   assertthat::assert_that(assertthat::is.number(protein),
+                           msg ="protein must be number")
+   assertthat::assert_that(assertthat::is.number(fat),
+                           msg ="fat must be number")
+   assertthat::assert_that(assertthat::is.number(carbohydrates),
+                           msg ="carbohydrates must be number")
+   assertthat::assert_that(assertthat::is.number(fiber),
+                           msg ="fiber must be number")
+
    protein_energy <- protein * 4
    fat_energy <- fat * 9
    carbohydrates_energy <- carbohydrates * 4
@@ -58,21 +56,18 @@ energy_value_of_the_product_per_100 <- function(protein, fat, carbohydrates, fib
 #'
 #' @export
 energy_total <- function(weight_of_product, protein, fat, carbohydrates, fiber = 0) {
-   if (!is.numeric(weight_of_product)){
-      stop("weight_of_product must be numeric")
-   }
-   if (!is.numeric(protein)){
-      stop("protein must be numeric")
-   }
-   if (!is.numeric(fat)){
-      stop("fat must be numeric")
-   }
-   if (!is.numeric(carbohydrates)){
-      stop("carbohydrates must be numeric")
-   }
-   if (!is.numeric(fiber)){
-      stop("fiber must be numeric")
-   }
+
+   assertthat::assert_that(assertthat::is.number(weight_of_product),
+                           msg ="weight_of_product must be number")
+   assertthat::assert_that(assertthat::is.number(protein),
+                           msg ="protein must be number")
+   assertthat::assert_that(assertthat::is.number(fat),
+                           msg ="fat must be number")
+   assertthat::assert_that(assertthat::is.number(carbohydrates),
+                           msg ="carbohydrates must be number")
+   assertthat::assert_that(assertthat::is.number(fiber),
+                           msg ="fiber must be number")
+
    energy_per_100 <- energy_value_of_the_product_per_100(protein, fat, carbohydrates, fiber)
    energy_per_100 * weight_of_product / 100
 }
@@ -89,12 +84,11 @@ energy_total <- function(weight_of_product, protein, fat, carbohydrates, fiber =
 #'
 #' @export
 energy_of_product <- function(product, weight){
-   if (!is.character(product)){
-      stop("product must be string")
-   }
-   if (!is.numeric(weight)){
-      stop("weight must be numeric")
-   }
+
+   assertthat::assert_that(assertthat::is.string(product),
+                           msg = "product must be string")
+   assertthat::assert_that(assertthat::is.number(weight),
+                           msg ="weight must be number")
 
    total_product_info <- read.table(system.file("caloric_table.txt", package = "Future"), sep = ";", header = T) %>%
       rename("Protein" = "Bialko", "Fat" = "Tluszcz", "Carbohydrates" = "Weglowodany") %>%
@@ -125,21 +119,16 @@ energy_of_product <- function(product, weight){
 #' @export
 energy_of_meal <- function(list_of_products, weight_of_products){
 
-   if (!is.list(list_of_products)){
-      stop("list_of_products must be list")
-   }
-   if (!all(sapply(list_of_products, class) == "character")){
-      stop("elements of list_of_products must be character")
-   }
-   if (!is.list(weight_of_products)){
-      stop("weight_of_products must be list")
-   }
-   if (!all(sapply(weight_of_products, class) == "numeric")){
-      stop("elements of weight_of_products must be numeric")
-   }
-   if (length(list_of_products) != length(weight_of_products)){
-      stop("list_of_products and weight_of_products must be the same length")
-   }
+   assertthat::assert_that(is.list(list_of_products),
+                           msg = "list_of_products must be list")
+   assertthat::assert_that(all(sapply(list_of_products, class) == "character"),
+                           msg = "elements of list_of_products must be character")
+   assertthat::assert_that(is.list(weight_of_products),
+                           msg = "weight_of_products must be list")
+   assertthat::assert_that(all(sapply(weight_of_products, class) == "numeric"),
+                           msg ="elements of weight_of_products must be numeric")
+   assertthat::assert_that(length(list_of_products) == length(weight_of_products),
+                           msg = "list_of_products and weight_of_products must be the same length")
 
    whole_energy <- 0
    for (i in 1:length(list_of_products)) {
