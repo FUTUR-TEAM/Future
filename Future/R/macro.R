@@ -14,7 +14,7 @@ macronutrients <- function(product, weight){
   assertthat::assert_that(assertthat::is.string(product),
                           msg = "product must be string")
   assertthat::assert_that(assertthat::is.number(weight),
-                          msg = "weight must be numeric")
+                          msg = "weight must be number")
 
   product_info <- read.table(system.file("caloric_table.txt", package = "Future"), sep = ";", header = T) %>%
     rename("Protein" = "Bialko", "Fat" = "Tluszcz", "Carbohydrates" = "Weglowodany") %>%

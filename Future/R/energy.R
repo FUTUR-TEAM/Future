@@ -20,13 +20,13 @@
 energy_value_of_the_product_per_100 <- function(protein, fat, carbohydrates, fiber = 0) {
 
    assertthat::assert_that(assertthat::is.number(protein),
-                           msg ="protein must be numeric")
+                           msg ="protein must be number")
    assertthat::assert_that(assertthat::is.number(fat),
-                           msg ="fat must be numeric")
+                           msg ="fat must be number")
    assertthat::assert_that(assertthat::is.number(carbohydrates),
-                           msg ="carbohydrates must be numeric")
+                           msg ="carbohydrates must be number")
    assertthat::assert_that(assertthat::is.number(fiber),
-                           msg ="fiber must be numeric")
+                           msg ="fiber must be number")
 
    protein_energy <- protein * 4
    fat_energy <- fat * 9
@@ -58,15 +58,15 @@ energy_value_of_the_product_per_100 <- function(protein, fat, carbohydrates, fib
 energy_total <- function(weight_of_product, protein, fat, carbohydrates, fiber = 0) {
 
    assertthat::assert_that(assertthat::is.number(weight_of_product),
-                           msg ="weight_of_product must be numeric")
+                           msg ="weight_of_product must be number")
    assertthat::assert_that(assertthat::is.number(protein),
-                           msg ="protein must be numeric")
+                           msg ="protein must be number")
    assertthat::assert_that(assertthat::is.number(fat),
-                           msg ="fat must be numeric")
+                           msg ="fat must be number")
    assertthat::assert_that(assertthat::is.number(carbohydrates),
-                           msg ="carbohydrates must be numeric")
+                           msg ="carbohydrates must be number")
    assertthat::assert_that(assertthat::is.number(fiber),
-                           msg ="fiber must be numeric")
+                           msg ="fiber must be number")
 
    energy_per_100 <- energy_value_of_the_product_per_100(protein, fat, carbohydrates, fiber)
    energy_per_100 * weight_of_product / 100

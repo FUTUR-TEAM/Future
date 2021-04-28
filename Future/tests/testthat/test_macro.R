@@ -12,7 +12,7 @@ testthat::test_that(desc = "macronutrients works!", {
 testthat::test_that(desc = "macronutreints has expected error messeges", {
 
   testthat::expect_error(macronutrients(25, 50), "product must be string")
-  testthat::expect_error(macronutrients("Kawior", "50"), "weight must be numeric")
+  testthat::expect_error(macronutrients("Kawior", "50"), "weight must be number")
 })
 
 
