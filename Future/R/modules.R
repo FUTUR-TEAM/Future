@@ -263,7 +263,8 @@ mainModule <- function(input, output, session){
          updateNumericInput(inputId = "weight05", value = 0)
       })
 
-##### creating lists for calculating energy of meal
+##### creating lists for calculating energy of meal #####
+
       observeEvent(input$click, {
          req(input$product01)
          rv$out <-
@@ -285,7 +286,8 @@ mainModule <- function(input, output, session){
             )
       })
 
-##### displaying energy of preparing meal
+##### displaying energy of preparing meal #####
+
       output$kcalMeal <- renderText({
          validate(
             need(rv$out, message = "Wybierz produkt")
