@@ -1,7 +1,11 @@
-0.0.5
+0.0.6
 
 - added one type of asserts to each functions
 - updated documentation
+
+0.0.5
+
+- convert shiny app for calculating energy_of_meal to module
 
 0.0.4
 
