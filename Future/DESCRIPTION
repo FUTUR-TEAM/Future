@@ -8,6 +8,8 @@ Description: Backend functions for shiny app Future.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
+Imports:
+    dplyr
 Suggests: 
     testthat (>= 3.0.0),
     shiny
