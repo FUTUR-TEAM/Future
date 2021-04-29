@@ -5,6 +5,8 @@
 #' @param product string, name of used product
 #' @param weight numeric, weight of used product
 #'
+#' @importFrom magrittr %>%
+#'
 #' @examples
 #' macronutrients("Kawior", 50)
 #'
@@ -16,9 +18,9 @@ macronutrients <- function(product, weight){
   assertthat::assert_that(assertthat::is.number(weight),
                           msg = "weight must be number")
 
-  product_info <- read.table(system.file("caloric_table.txt", package = "Future"), sep = ";", header = T) %>%
-    rename("Protein" = "Bialko", "Fat" = "Tluszcz", "Carbohydrates" = "Weglowodany") %>%
-    filter(Nazwa %in% product)
+  product_info <- utils::read.table(system.file("caloric_table.txt", package = "Future"), sep = ";", header = T) %>%
+    dplyr::rename("Protein" = "Bialko", "Fat" = "Tluszcz", "Carbohydrates" = "Weglowodany") %>%
+    dplyr::filter(Nazwa %in% product)
   macro_info <- list(product_name = product,
                      weight_of_product = weight,
                      protein = as.numeric(product_info$Protein) * weight / 100,

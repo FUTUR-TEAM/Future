@@ -27,7 +27,7 @@ server <- function(input, output, session) {
   output$sequence <- renderText({
     req(input$weight)
     out <- Future::BMI(input$weight, input$growth, input$sex)
-    sprintf("BMI jest równe: %.2f. Ocena sylwetyk: %s.", out$BMI, out$figure)
+    sprintf("BMI wynosi: %.2f. Ocena sylwetyki: %s.", out$BMI, out$figure)
   })
 }
 

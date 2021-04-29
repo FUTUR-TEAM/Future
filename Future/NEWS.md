@@ -1,3 +1,7 @@
+0.0.7
+
+- fixed problems
+
 0.0.6
 
 - added one type of asserts to each functions
