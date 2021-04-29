@@ -2,6 +2,9 @@
 #'
 #' @param id character, shiny id
 #'
+#' @import shinydashboard
+#' @import shiny
+#'
 #' @export
 mainModuleUI <- function(id){
 
@@ -18,7 +21,7 @@ mainModuleUI <- function(id){
                 div(id = ns("box01"), box(
                    width = 12,
                    column(6,
-                          pickerInput(
+                          shinyWidgets::pickerInput(
                              inputId = ns("product01"),
                              label = "Wybierz produkt",
                              choices = "",
@@ -38,11 +41,11 @@ mainModuleUI <- function(id){
                       color = "primary"
                    )
                 )),
-                hidden(div(id = ns("box02"), box(
+                shinyjs::hidden(div(id = ns("box02"), box(
                    width = 12,
                    column(
                       6,
-                      pickerInput(
+                      shinyWidgets::pickerInput(
                          inputId = ns("product02"),
                          label = "Wybierz produkt",
                          choices = "",
@@ -72,11 +75,11 @@ mainModuleUI <- function(id){
                       color = "danger"
                    ),
                 ))),
-                hidden(div(id = ns("box03"), box(
+                shinyjs::hidden(div(id = ns("box03"), box(
                    width = 12,
                    column(
                       6,
-                      pickerInput(
+                      shinyWidgets::pickerInput(
                          inputId = ns("product03"),
                          label = "Wybierz produkt",
                          choices = "",
@@ -106,11 +109,11 @@ mainModuleUI <- function(id){
                       color = "danger"
                    ),
                 ))),
-                hidden(div(id = ns("box04"), box(
+                shinyjs::hidden(div(id = ns("box04"), box(
                    width = 12,
                    column(
                       6,
-                      pickerInput(
+                      shinyWidgets::pickerInput(
                          inputId = ns("product04"),
                          label = "Wybierz produkt",
                          choices = "",
@@ -140,11 +143,11 @@ mainModuleUI <- function(id){
                       color = "danger"
                    ),
                 ))),
-                hidden(div(id = ns("box05"), box(
+                shinyjs::hidden(div(id = ns("box05"), box(
                    width = 12,
                    column(
                       6,
-                      pickerInput(
+                      shinyWidgets::pickerInput(
                          inputId = ns("product05"),
                          label = "Wybierz produkt",
                          choices = "",
@@ -199,16 +202,16 @@ mainModule <- function(input, output, session){
 ##### loading caloric table and updating inputs with data from table #####
 
       product_table <-
-         read.table(
+         utils::read.table(
             system.file("caloric_table.txt", package = "Future"),
             sep = ";",
             header = TRUE
          )
-      updatePickerInput(session = session, inputId = "product01", choices = c("", product_table$Nazwa))
-      updatePickerInput(session = session, inputId = "product02", choices = c("", product_table$Nazwa))
-      updatePickerInput(session = session, inputId = "product03", choices = c("", product_table$Nazwa))
-      updatePickerInput(session = session, inputId = "product04", choices = c("", product_table$Nazwa))
-      updatePickerInput(session = session, inputId = "product05", choices = c("", product_table$Nazwa))
+   shinyWidgets::updatePickerInput(session = session, inputId = "product01", choices = c("", product_table$Nazwa))
+   shinyWidgets::updatePickerInput(session = session, inputId = "product02", choices = c("", product_table$Nazwa))
+   shinyWidgets::updatePickerInput(session = session, inputId = "product03", choices = c("", product_table$Nazwa))
+   shinyWidgets::updatePickerInput(session = session, inputId = "product04", choices = c("", product_table$Nazwa))
+   shinyWidgets::updatePickerInput(session = session, inputId = "product05", choices = c("", product_table$Nazwa))
 
 ##### adding new products for the meal #####
 

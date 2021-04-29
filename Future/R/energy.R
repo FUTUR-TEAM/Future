@@ -79,6 +79,7 @@ energy_total <- function(weight_of_product, protein, fat, carbohydrates, fiber =
 #' @param product character, name of used product
 #' @param weight numeric, weight of the used product expressed in grams
 #'
+#' @importFrom magrittr %>%
 #' @examples
 #' energy_of_product("Kawior", 50)
 #'
@@ -90,7 +91,7 @@ energy_of_product <- function(product, weight){
    assertthat::assert_that(assertthat::is.number(weight),
                            msg ="weight must be number")
 
-   total_product_info <- read.table(system.file("caloric_table.txt", package = "Future"), sep = ";", header = T) %>%
+   total_product_info <- utils::read.table(system.file("caloric_table.txt", package = "Future"), sep = ";", header = T) %>%
       dplyr::rename("Protein" = "Bialko", "Fat" = "Tluszcz", "Carbohydrates" = "Weglowodany") %>%
       dplyr::filter(Nazwa %in% product)
    energy <- energy_total(weight_of_product = weight,
