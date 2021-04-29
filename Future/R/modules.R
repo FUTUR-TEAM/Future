@@ -173,7 +173,8 @@ mainModuleUI <- function(id){
                                                         size = "sm",
                                                         style = "jelly",
                                                         color = "success"),
-                verbatimTextOutput(ns("kcalMeal")))
+                verbatimTextOutput(ns("kcalMeal")),
+                verbatimTextOutput(ns("macro_of_meal")))
       )
    )
 
@@ -293,6 +294,13 @@ mainModule <- function(input, output, session){
             need(rv$out, message = "Wybierz produkt")
          )
          paste("Kalorycznosc posilku wynosi", rv$out, "kcal.")
+      })
+
+      output$macro_of_meal <- renderText({
+         validate(
+            need(rv$out, message = "Wybierz produkt")
+         )
+         paste("Makroskładniki posiłku", rv$out, ".")
       })
 
 }
