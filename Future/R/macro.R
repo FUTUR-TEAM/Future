@@ -61,5 +61,12 @@ macronutrients_of_meal <- function(list_of_products, weight_of_products){
     macro <- macronutrients(list_of_products[[i]], weight_of_products[[i]])
     df_macro <- rbind(df_macro, macro)
   }
-  return(df_macro)
+  sum_protein <- colSums(df_macro[3])
+  sum_fat <- colSums(df_macro[4])
+  sum_carbohydrates <- colSums(df_macro[5])
+  macro_sum <- list(proteins = sum_protein,
+                    fats = sum_fat,
+                    carbo = sum_carbohydrates)
+
+  return(macro_sum)
 }
