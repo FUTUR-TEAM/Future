@@ -1,3 +1,9 @@
+0.0.8
+
+- added new return in macronutrients_of_meal
+- added new row in data
+- added new output in app
+
 0.0.7
 
 - fixed problems

@@ -176,7 +176,8 @@ mainModuleUI <- function(id){
                                                         size = "sm",
                                                         style = "jelly",
                                                         color = "success"),
-                verbatimTextOutput(ns("kcalMeal")))
+                verbatimTextOutput(ns("kcalMeal")),
+                verbatimTextOutput(ns("macroMeal")))
       )
    )
 
@@ -270,7 +271,7 @@ mainModule <- function(input, output, session){
 
       observeEvent(input$click, {
          req(input$product01)
-         rv$out <-
+         rv$out_kcalMeal <-
             energy_of_meal(
                list_of_products = list(
                   input$product01,
@@ -287,15 +288,40 @@ mainModule <- function(input, output, session){
                   as.numeric(input$weight05)
                )
             )
+         rv$out_macroMeal <-
+            macronutrients_of_meal(
+               list_of_products = list(
+                  input$product01,
+                  input$product02,
+                  input$product03,
+                  input$product04,
+                  input$product05
+               ),
+               weight_of_products = list(
+                  as.numeric(input$weight01),
+                  as.numeric(input$weight02),
+                  as.numeric(input$weight03),
+                  as.numeric(input$weight04),
+                  as.numeric(input$weight05)
+               )
+            )
+
       })
 
 ##### displaying energy of preparing meal #####
 
       output$kcalMeal <- renderText({
          validate(
-            need(rv$out, message = "Wybierz produkt")
+            need(rv$out_kcalMeal, message = "Wybierz produkt")
          )
-         paste("Kalorycznosc posilku wynosi", rv$out, "kcal.")
+         paste("Kalorycznosc posilku wynosi", rv$out_kcalMeal, "kcal.")
+      })
+
+      output$macroMeal <- renderText({
+         validate(
+            need(rv$out_macroMeal, message = "Wybierz produkt")
+         )
+         sprintf("Bialka: %.2f, tluszcze: %.2f, weglowodany: %.2f.", rv$out_macroMeal$proteins, rv$out_macroMeal$fats, rv$out_macroMeal$carbo)
       })
 
 }
