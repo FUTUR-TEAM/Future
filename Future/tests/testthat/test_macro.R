@@ -23,13 +23,10 @@ testthat::test_that(desc = "macronutrients_of_meal works!", {
   weight_of_products <- list(50, 100)
   result <- macronutrients_of_meal(list_of_products, weight_of_products)
 
-  testthat::expect_identical(length(list_of_products), length(weight_of_products))
-  testthat::expect_equal(length(result), 5)
-  testthat::expect_equal(object = result$product_name, expected = c("Kawior", "Kawior"))
-  testthat::expect_equal(object = result$weight_of_product, expected = c(50, 100))
-  testthat::expect_equal(object = result$protein, expected = c(12, 24))
-  testthat::expect_equal(object = result$fat, expected = c(9, 18))
-  testthat::expect_equal(object = result$carbohydrates, expected = c(2, 4))
+  testthat::expect_equal(nrow(result), 3)
+  testthat::expect_equal(object = result$macro_sum, expected = c("protein", "fat", "carbohydrates"))
+  testthat::expect_equal(object = result$sum, expected = c(36, 27, 6))
+  testthat::expect_equal(object = result$percent, expected = c(52.17, 39.13, 8.70))
 })
 
 testthat::test_that(desc = "macronutreints_of_meal has expected error messeges", {

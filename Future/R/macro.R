@@ -64,9 +64,16 @@ macronutrients_of_meal <- function(list_of_products, weight_of_products){
   sum_protein <- colSums(df_macro[3])
   sum_fat <- colSums(df_macro[4])
   sum_carbohydrates <- colSums(df_macro[5])
-  macro_sum <- list(proteins = sum_protein,
-                    fats = sum_fat,
-                    carbo = sum_carbohydrates)
+  macro_sum <- data.frame(macro_sum = c("protein", "fat", "carbohydrates"),
+                          sum = c(sum_protein, sum_fat, sum_carbohydrates))
 
-  return(macro_sum)
+  percent_protein <- round(sum_protein/colSums(macro_sum[2])*100, digits = 2)
+  percent_fat <- round(sum_fat/colSums(macro_sum[2])*100, digits = 2)
+  percent_carbohydrates <- round(sum_carbohydrates/colSums(macro_sum[2])*100, digits = 2)
+
+  total_macro_df <-cbind(macro_sum, percent = c(percent_protein, percent_fat, percent_carbohydrates))
+  rownames(total_macro_df) <- NULL
+
+  total_macro_df
 }
+
