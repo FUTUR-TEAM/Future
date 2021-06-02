@@ -177,7 +177,7 @@ mainModuleUI <- function(id){
                                                         style = "jelly",
                                                         color = "success"),
                 verbatimTextOutput(ns("kcalMeal")),
-                verbatimTextOutput(ns("macroMeal")))
+                plotOutput(ns("percentMacro")))
       )
    )
 
@@ -317,11 +317,11 @@ mainModule <- function(input, output, session){
          paste("Kalorycznosc posilku wynosi", rv$out_kcalMeal, "kcal.")
       })
 
-      output$macroMeal <- renderText({
+      output$percentMacro <- renderPlot({
          validate(
             need(rv$out_macroMeal, message = "Wybierz produkt")
          )
-         sprintf("Bialka: %.2f, tluszcze: %.2f, weglowodany: %.2f.", rv$out_macroMeal$proteins, rv$out_macroMeal$fats, rv$out_macroMeal$carbo)
+         macro_percent_graph(rv$out_macroMeal)
       })
 
 }

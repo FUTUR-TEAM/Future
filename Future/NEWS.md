@@ -1,3 +1,8 @@
+0.0.9
+
+- changed return in macronutrients_of_meal
+- added function to prepare pie chart
+
 0.0.8
 
 - added new return in macronutrients_of_meal
