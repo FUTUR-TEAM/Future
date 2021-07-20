@@ -26,10 +26,10 @@ macro_percent_graph <- function(macronutrients_df){
   macronutrients_df$labelPosition <- (macronutrients_df$ymax + macronutrients_df$ymin) / 2
 
   # Compute a good label
-  macronutrients_df$label <- paste0(macronutrients_df$macro_sum, "\n value: ", macronutrients_df$percent)
+  macronutrients_df$label <- paste0(macronutrients_df$macro_name, "\n value: ", macronutrients_df$percent)
 
   # Make the plot
-  plot <- ggplot(macronutrients_df, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=macro_sum)) +
+  plot <- ggplot(macronutrients_df, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=macro_name)) +
     geom_rect() +
     geom_label( x=3.5, aes(y=labelPosition, label=label), size=5, parse = TRUE) +
     scale_fill_brewer(palette=4) +
