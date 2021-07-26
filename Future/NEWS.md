@@ -1,3 +1,7 @@
+0.0.10
+
+-fixed problems
+
 0.0.9
 
 - changed return in macronutrients_of_meal
