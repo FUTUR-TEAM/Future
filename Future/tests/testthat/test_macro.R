@@ -24,7 +24,7 @@ testthat::test_that(desc = "macronutrients_of_meal works!", {
   result <- macronutrients_of_meal(list_of_products, weight_of_products)
 
   testthat::expect_equal(nrow(result), 3)
-  testthat::expect_equal(object = result$macro_sum, expected = c("protein", "fat", "carbohydrates"))
+  testthat::expect_equal(object = result$macro_name, expected = c("protein", "fat", "carbohydrates"))
   testthat::expect_equal(object = result$sum, expected = c(36, 27, 6))
   testthat::expect_equal(object = result$percent, expected = c(52.17, 39.13, 8.70))
 })
