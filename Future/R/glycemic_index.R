@@ -19,11 +19,12 @@ glycemic_index <- function(product, weight){
                           msg = "weight must be number")
 
   glycemic_info <- utils::read.table(system.file("digestible_carbo.txt", package = "Future"), sep = "\t", header = T) %>%
-    dplyr::filter(nazwa %in% product)
+    dplyr::rename("name" = "nazwa", "carbohydrates"	= "weglowodany", "fiber"	= "blonnik", "digestible_carbo" =	"przyswajalne_weglo") %>%
+    dplyr::filter(name %in% product)
   carbo_info <- list(name = product,
                      weight_of_product = weight,
-                     carbohydrates = as.numeric(glycemic_info$weglowodany) * weight / 100,
-                     digestible_carbohydrates = as.numeric(glycemic_info$przyswajalne_weglo) * weight / 100
+                     carbohydrates = as.numeric(glycemic_info$carbohydrates) * weight / 100,
+                     digestible_carbohydrates = as.numeric(glycemic_info$digestible_carbo) * weight / 100
   )
 
   glycemic_index_of_product <- utils::read.table(system.file("glycemic_table.txt", package = "Future"), sep = ";", header = T) %>%
@@ -64,10 +65,10 @@ glycemic_index_of_meal <- function(list_of_products, weight_of_products){
   assertthat::assert_that(length(list_of_products) == length(weight_of_products),
                         msg = "list_of_products and weight_of_products must be the same length")
 
- dataframe_IG <- data.frame()
+  dataframe_IG <- data.frame()
   for (i in 1:length(list_of_products)) {
    IG <- glycemic_index(list_of_products[[i]], weight_of_products[[i]])
-     dataframe_IG <- rbind(dataframe_IG, IG)
+     dataframe_IG <- base::rbind(dataframe_IG, IG)
   }
 
   sum_digestible_carbo <- colSums(dataframe_IG[4])
@@ -79,4 +80,5 @@ glycemic_index_of_meal <- function(list_of_products, weight_of_products){
 
   sum_IG_of_meal <- sum(dataframe_IG$IG_of_product)
 
-  sum_IG_of_meal}
+  sum_IG_of_meal
+}
