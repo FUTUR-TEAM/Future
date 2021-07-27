@@ -66,7 +66,7 @@ glycemic_index_of_meal <- function(list_of_products, weight_of_products){
                         msg = "list_of_products and weight_of_products must be the same length")
 
   dataframe_IG <- data.frame()
-  for (i in 1:length(list_of_products)) {
+  for (i in seq_len(length(list_of_products))) {
    IG <- glycemic_index(list_of_products[[i]], weight_of_products[[i]])
      dataframe_IG <- base::rbind(dataframe_IG, IG)
   }
