@@ -1,6 +1,6 @@
 Package: Future
 Type: Package
-Title: Future
+Title: Package with Shinyapp for Creating Meals
 Version: 0.0.10
 Author: Karolina Scigocka
 Maintainer: Karolina Scigocka <scigocka.karolina@gmail.com>
@@ -14,13 +14,13 @@ Depends:
 Imports:
     dplyr,
     assertthat,
-    shinytest,
     shinyjs,
     shinyWidgets,
     magrittr,
     utils,
     ggplot2
 Suggests: 
+    shinytest,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 RoxygenNote: 7.1.1
