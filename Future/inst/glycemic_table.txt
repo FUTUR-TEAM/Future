@@ -1,0 +1,230 @@
+"nazwa";"IG"
+"Ocet winny";5
+"Awokado";10
+"Agrest";15
+"Brukselka";15
+"Cebula";15
+"Cykoria";15
+"Fasola szparagowa";15
+"Kalafior";15
+"Kapusta biala";15
+"Kapusta czerwona";15
+"Kapusta kiszona";15
+"Kapusta wloska";15
+"Kurka swieza, grzyb";15
+"Migdaly";15
+"Ogorek";15
+"Kiszone ogorki";15
+"Oliwki";15
+"Orzechy arachidowe";15
+"Orzechy laskowe";15
+"Orzechy nerkowca";15
+"Orzechy pistacjowe";15
+"Orzechy wloskie";15
+"Orzeszki ziemne";15
+"Papryka czerwona";15
+"Por";15
+"Porzeczki czarne";15
+"Rabarabar";15
+"Salata";15
+"Szczaw";15
+"Szparagi";15
+"Szpinak";15
+"Czekolada gorzka";20
+"Czeresnie";20
+"Karczochy";20
+"Kakao gorzkie";20
+"Pedy bambusa";20
+"Baklazan";20
+"Borowik suszony";15
+"Borowik swiezy";15
+"Borowki";25
+"Porzeczki czerwone";25
+"Dynia, pestki";25
+"Jezyny";25
+"Maliny";25
+"Truskawki";25
+"Wisnie";25
+"Soczewica, suche ziarno";25
+"Buraki";30
+"Ciecierzyca gotowana";30
+"Czerwona soczewica";30
+"Czosnek";30
+"Dzem niskoslodzony";30
+"Grejfrut";30
+"Gruszka";30
+"Mandarynka";30
+"Marakuja";30
+"Marchew";30
+"Morele";30
+"Pomelo";30
+"Pomidor";30
+"Rzepa";30
+"Soczewica zolta";30
+"Ser twarogowy chudy";30
+"Amarantus";35
+"Fasola biala, ziarno suche";35
+"Brzoskwinia";35
+"Ciecierzyca z puszki";35
+"Drozdze piekarskie";35
+"Ryz dziki amerykanski";35
+"Figi swieze";35
+"Granat";35
+"Mak";35
+"Groszek zielony";35
+"Jablko";35
+"Jablko suszone";35
+"Jogurt naturalny 0% tluszczu";35
+"Komosa rylowa";35
+"Maka z ciecierzycy";35
+"Musztarda";35
+"Slonecznik ziarno";35
+"Pigwa";35
+"Pomarancza";35
+"Pomidory suszone";35
+"Seler korzen";35
+"sliwki";35
+"Sok pomidorowy";35
+"Wino biale wytrawne";0
+"Wino czerwone wytrawne";0
+"Fasola biala, konserwa";40
+"Figi suszone";40
+"Chleb pumpernikiel";40
+"Otreby pszenne";40
+"Otreby owisane";40
+"Kasza gryczana";40
+"Makaron razowy";40
+"Maslo orzechowe";40
+"Mleko kokosowe";40
+"Morele suszone";40
+"sliwki suszone";40
+"Platki owsiane";40
+"Sok marchwiowy";40
+"Ananas";45
+"Banan";60
+"Chleb zytni razowy";45
+"Chleb zytni zwykly";45
+"Jeczmien";45
+"Groszek zielony, konserwa";45
+"Kasza bulgur";45
+"Kokos";45
+"Ryz basmati";50
+"Sok grejfrutowy";45
+"Sok pomaranczowy";45
+"Winogrona";45
+"zurawiny";45
+"Fasola czerwona Red Kidney, konserwa";40
+"Bataty";50
+"Chleb orkiszowy";50
+"Soja, suche ziarno";15
+"Kiwi";50
+"Makaron z pszenicy durum";50
+"Mango";50
+"Muesli";50
+"Owoc lichee";50
+"Owoc kaki";50
+"Ryz bialy";70
+"Ryz brazowy";50
+"Sok jablkowy";50
+"Brzoskwinie, konserwa, odsaczone";55
+"Ryz czerwony";55
+"Ketchup";55
+"Sushi";55
+"Sok winogronowy";55
+"Sok z mango";55
+"Kasza manna";60
+"Melon";60
+"Majonez";60
+"Miod pszczeli";60
+"Mleko 3,2% tluszczu";60
+"Ryz dlugoziarnisty";60
+"Chleb pszenny razowy";65
+"Kukurydza, konserwa";65
+"Kasza kuskus";65
+"Rodzynki";65
+"Ziemniaki";65
+"Bulka grahamka";70
+"Bulka kajzerka";70
+"Bulka maslana";70
+"Bulka tarta";70
+"Bulka wroclawska";70
+"Bulka zwykla";70
+"Daktyle suszone";70
+"Kasza jeczmienna";70
+"Skrobia kukurydziana";70
+"Makaron bezjajeczny";70
+"Makaron bezjajeczny z pszenicy durum";70
+"Makaron czterojajeczny";70
+"Makaron dwujajeczny";70
+"Kasza jaglana";70
+"Arbuz";75
+"Dynia";75
+"Kabaczek";75
+"Bob";80
+"Marchew gotowana";80
+"Puree ziemniaczane";80
+"Maka pszenna 500";85
+"Maka pszenna 550";85
+"Mleko ryzowe";85
+"Pasternak";85
+"Platki kukurydziane";85
+"Ryz preparowany";85
+"Chleb pszenny zwykly";90
+"Maka ziemniaczana";90
+"Maka ryzowa";95
+"Ziemniaki pieczone";95
+"Actimel, mleko jogurtowe";30
+"Baton Bounty";70
+"Baton Knoppers";70
+"Baton Mars";70
+"Baton Milky Way";70
+"Baton Nestle Lion";70
+"Baton Snickers";70
+"Baton Twix";70
+"Biszkopty, ciastka";55
+"Bocwina";30
+"Brokuly";15
+"Budyn czekoladowy";45
+"Budyn waniliowy";45
+"Chalka";60
+"Chalwa";20
+"Chipsy paprykowe";90
+"Chrupki kukurydziane";65
+"Coca Cola, napoj";60
+"Cukier";70
+"Cukinia";15
+"Cytryna";30
+"Czarne jagody";25
+"Czekolada biala";45
+"Czekolada deserowa";30
+"Czekolada mleczna";45
+"Endywia";15
+"Groch, suche ziarno";20
+"Gruszka suszona";40
+"Jarmuz";5
+"Jogurt naturalny 2% tluszczu";30
+"Kalarepa";20
+"Kasza jeczmienna peczak";25
+"Kefir 2% tluszczu";30
+"Koncentrat pomidorowy 30%";50
+"Krem czekoladowy Nutella";35
+"Mleko 0% tluszczu";30
+"Mleko 0,5% tluszczu";30
+"Mleko 2% tluszczu";30
+"Nektarynka";35
+"Pieczarka swieza";10
+"Pietruszka korzen";15
+"Pietruszka liscie";5
+"Piwo bezalkoholowe";110
+"Piwo ciemne pelne";110
+"Piwo jasne mocne";110
+"Piwo jasne pelne";110
+"Platki jeczmienne";40
+"Platki pszenne";50
+"Platki zytnie";40
+"Porzeczki biale";20
+"Poziomki";35
+"Rzezucha";10
+"Rzodkiewka";15
+"Sok ananasowy";50
+"Sok z czarnej porzeczki";25

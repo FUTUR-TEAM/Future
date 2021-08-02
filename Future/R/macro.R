@@ -57,6 +57,7 @@ macronutrients_of_meal <- function(list_of_products, weight_of_products){
                           msg = "list_of_products and weight_of_products must be the same length")
 
   df_macro <- data.frame()
+
   for (i in 1:length(list_of_products)) {
     macro <- macronutrients(list_of_products[[i]], weight_of_products[[i]])
     df_macro <- rbind(df_macro, macro)
