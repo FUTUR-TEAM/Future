@@ -1,6 +1,6 @@
 Package: Future
 Type: Package
-Title: Future
+Title: Package with Shinyapp for Creating Meals
 Version: 0.0.10
 Author: Karolina Scigocka
 Maintainer: Karolina Scigocka <scigocka.karolina@gmail.com>
