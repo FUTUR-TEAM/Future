@@ -93,7 +93,7 @@ energy_of_product <- function(product, weight){
 
    total_product_info <- utils::read.table(system.file("caloric_table.txt", package = "Future"), sep = ";", header = T) %>%
       dplyr::rename("Protein" = "Bialko", "Fat" = "Tluszcz", "Carbohydrates" = "Weglowodany") %>%
-      dplyr::filter(Nazwa %in% product)
+      dplyr::filter(.data$Nazwa %in% product)
    energy <- energy_total(weight_of_product = weight,
                           protein = as.numeric(total_product_info$Protein),
                           fat = as.numeric(total_product_info$Fat),

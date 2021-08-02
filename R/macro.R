@@ -20,7 +20,7 @@ macronutrients <- function(product, weight){
 
   product_info <- utils::read.table(system.file("caloric_table.txt", package = "Future"), sep = ";", header = T) %>%
     dplyr::rename("Protein" = "Bialko", "Fat" = "Tluszcz", "Carbohydrates" = "Weglowodany") %>%
-    dplyr::filter(Nazwa %in% product)
+    dplyr::filter(.data$Nazwa %in% product)
   macro_info <- list(product_name = product,
                      weight_of_product = weight,
                      protein = as.numeric(product_info$Protein) * weight / 100,
