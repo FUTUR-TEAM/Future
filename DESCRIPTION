@@ -18,7 +18,8 @@ Imports:
     shinyWidgets,
     magrittr,
     utils,
-    ggplot2
+    ggplot2,
+    plotly
 Suggests: 
     shinytest,
     testthat (>= 3.0.0)
