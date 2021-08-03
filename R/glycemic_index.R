@@ -20,7 +20,7 @@ glycemic_index <- function(product, weight){
 
   glycemic_info <- utils::read.table(system.file("digestible_carbo.txt", package = "Future"), sep = "\t", header = T) %>%
     dplyr::rename("name" = "nazwa", "carbohydrates"	= "weglowodany", "fiber"	= "blonnik", "digestible_carbo" =	"przyswajalne_weglo") %>%
-    dplyr::filter(name %in% product)
+    dplyr::filter(.data$name %in% product)
   carbo_info <- list(name = product,
                      weight_of_product = weight,
                      carbohydrates = as.numeric(glycemic_info$carbohydrates) * weight / 100,
@@ -28,7 +28,7 @@ glycemic_index <- function(product, weight){
   )
 
   glycemic_index_of_product <- utils::read.table(system.file("glycemic_table.txt", package = "Future"), sep = ";", header = T) %>%
-    dplyr::filter(nazwa %in% product)
+    dplyr::filter(.data$nazwa %in% product)
 
   total_carbo_info <- list(name = carbo_info$name,
                            weight = carbo_info$weight_of_product,

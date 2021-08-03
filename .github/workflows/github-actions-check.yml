@@ -41,7 +41,7 @@ jobs:
       - name: Query dependencies
         run: |
           install.packages('remotes')
-          saveRDS(remotes::dev_package_deps("Future", dependencies = TRUE), ".github/depends.Rds", version = 2)
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
           writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
         shell: Rscript {0}
 
@@ -61,7 +61,7 @@ jobs:
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
       - name: Install dependencies
         run: |
-          remotes::install_deps("Future", dependencies = TRUE)
+          remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
@@ -70,7 +70,7 @@ jobs:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
         run: |
           options(crayon.enabled = TRUE)
-          rcmdcheck::rcmdcheck("Future", args = c("--no-manual"), error_on = "warning", check_dir = "check")
+          rcmdcheck::rcmdcheck(args = c("--no-manual"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
       - name: Upload check results

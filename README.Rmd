@@ -1,0 +1,45 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# Future
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/FUTUR-TEAM/Future/workflows/R-CMD-check/badge.svg)](https://github.com/FUTUR-TEAM/Future/actions)
+<!-- badges: end -->
+
+Future is a tool for creating healthy meals. You can calculate your BMI, calculate energy value of preparing meal and calculate glycemic index of this meal.
+
+## Installation
+
+You can install the development version of Future from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("FUTUR-TEAM/Future")
+```
+## Example
+
+By default, Future was prepared as Shiny app, but you can use single function from command line.
+This is a basic example which shows you how to calculate percent of macronutrients of meal from lists of using products and their weights
+
+```{r example}
+library(Future)
+
+df <- data.frame(products = c("Banan","Kawior"), weight = c(50,50), stringsAsFactors = FALSE) 
+
+macro_df <- macronutrients_of_meal(as.list(df$products), as.list(df$weight))
+macro_df
+macro_percent_graph(macro_df)
+```

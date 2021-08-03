@@ -20,7 +20,7 @@ macro_percent_graph <- function(macronutrients_df){
   macronutrients_df$ymax = cumsum(macronutrients_df$fraction)
 
   # Compute the bottom of each rectangle
-  macronutrients_df$ymin = c(0, head(macronutrients_df$ymax, n=-1))
+  macronutrients_df$ymin = c(0, utils::head(macronutrients_df$ymax, n=-1))
 
   # Compute label position
   macronutrients_df$labelPosition <- (macronutrients_df$ymax + macronutrients_df$ymin) / 2
@@ -30,9 +30,9 @@ macro_percent_graph <- function(macronutrients_df){
   macronutrients_df$label <- paste0(macronutrients_df$sum, "\n value: ", macronutrients_df$percent)
 
   # Make the plot
-  plot <- ggplot(macronutrients_df, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=macro_name)) +
+  plot <- ggplot(macronutrients_df, aes(ymax=.data$ymax, ymin=.data$ymin, xmax=4, xmin=3, fill=.data$macro_name)) +
     geom_rect() +
-    geom_label( x=3.5, aes(y=labelPosition, label=label), size=5, parse = TRUE) +
+    geom_label( x=3.5, aes(y=.data$labelPosition, label=.data$label), size=5, parse = TRUE) +
     scale_fill_brewer(palette=4) +
     coord_polar(theta="y") +
     xlim(c(2, 4)) +
