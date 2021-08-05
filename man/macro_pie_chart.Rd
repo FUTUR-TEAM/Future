@@ -16,5 +16,6 @@ Function for creating interactive pie chart of percent of macronutrients in prep
 list_of_products <- list("Banan", "Truskawki")
 weight_of_products <- list(100, 100)
 macro_percent <- macronutrients_of_meal(list_of_products, weight_of_products)
+macro_pie_chart(macro_percent)
 
 }
