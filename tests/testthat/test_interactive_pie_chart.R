@@ -17,20 +17,17 @@ testthat::test_that(desc = "interactive pie chart has expected error messeges", 
   testthat::expect_error(macro_pie_chart(character()),
                          "macro_percent must be data frame")
 
-  list_of_products <- list("Banan", "Truskawki")
-  weight_of_products <- list(100, 100)
-  macro_percent <- macronutrients_of_meal(list_of_products, weight_of_products)
-  macro_percent <- cbind(macro_percent, 1)
-  testthat::expect_error(macro_pie_chart(macro_percent),
+  macro_percent_additional_column <- cbind(macro_percent, 1)
+  testthat::expect_error(macro_pie_chart(macro_percent_additional_column),
                          "macro_percent must have 3 columns: 'macro_name', 'sum', 'percent'")
 
-  list_of_products <- list("Banan", "Truskawki")
-  weight_of_products <- list(100, 100)
-  macro_percent <- macronutrients_of_meal(list_of_products, weight_of_products)
-  macro_percent <- rbind(macro_percent, 1)
-  testthat::expect_error(macro_pie_chart(macro_percent),
+  macro_percent_additional_row <- rbind(macro_percent, 1)
+  testthat::expect_error(macro_pie_chart(macro_percent_additional_row),
                          "macro_percent must have 3 rows: 'protein', 'fat', 'carbohydrates'")
 
+  macro_percent_missing_column <- macro_percent[ ,2:3]
+  testthat::expect_error(macro_pie_chart(macro_percent_missing_column),
+                         "macro_percent must have 3 columns: 'macro_name', 'sum', 'percent'")
 
   })
 
