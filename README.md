@@ -6,8 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/FUTUR-TEAM/Future/workflows/R-CMD-check/badge.svg)](https://github.com/FUTUR-TEAM/Future/actions)
-[![Coveralls test
-coverage](https://coveralls.io/repos/github/FUTUR-TEAM/Future/badge.svg)](https://coveralls.io/r/FUTUR-TEAM/Future?branch=main)
+[![Codecov test
+coverage](https://codecov.io/gh/FUTUR-TEAM/Future/branch/main/graph/badge.svg)](https://codecov.io/gh/FUTUR-TEAM/Future?branch=main)
 <!-- badges: end -->
 
 Future is a tool for creating healthy meals. You can calculate your BMI,
