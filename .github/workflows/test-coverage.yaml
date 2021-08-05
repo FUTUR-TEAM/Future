@@ -46,3 +46,5 @@ jobs:
       - name: Test coverage
         run: covr::coveralls()
         shell: Rscript {0}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
