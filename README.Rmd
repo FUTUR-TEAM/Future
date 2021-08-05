@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/FUTUR-TEAM/Future/workflows/R-CMD-check/badge.svg)](https://github.com/FUTUR-TEAM/Future/actions)
+[![Codecov test coverage](https://codecov.io/gh/FUTUR-TEAM/Future/branch/main/graph/badge.svg)](https://codecov.io/gh/FUTUR-TEAM/Future?branch=main)
 <!-- badges: end -->
 
 Future is a tool for creating healthy meals. You can calculate your BMI, calculate energy value of preparing meal and calculate glycemic index of this meal.
