@@ -1,3 +1,8 @@
+0.0.12
+
+- added shiny tests
+
+
 0.0.11
 
 - added function to interactive pie chart
