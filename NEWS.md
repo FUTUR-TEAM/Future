@@ -1,3 +1,7 @@
+0.0.13
+
+- added new outputs to shiny app: percentMacro and glycemic_index
+
 0.0.12
 
 - added shiny tests
