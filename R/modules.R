@@ -177,7 +177,8 @@ mainModuleUI <- function(id){
                                                         style = "jelly",
                                                         color = "success"),
                 verbatimTextOutput(ns("kcalMeal")),
-                plotOutput(ns("percentMacro")))
+                plotly::plotlyOutput(ns("percentMacro")),
+                verbatimTextOutput(ns("glycemic_index")))
       )
    )
 
@@ -305,7 +306,23 @@ mainModule <- function(input, output, session){
                   as.numeric(input$weight05)
                )
             )
-
+         rv$out_glycemic_index <-
+            glycemic_index_of_meal(
+               list_of_products = list(
+                  input$product01,
+                  input$product02,
+                  input$product03,
+                  input$product04,
+                  input$product05
+               ),
+               weight_of_products = list(
+                  as.numeric(input$weight01),
+                  as.numeric(input$weight02),
+                  as.numeric(input$weight03),
+                  as.numeric(input$weight04),
+                  as.numeric(input$weight05)
+               )
+            )
       })
 
 ##### displaying energy of preparing meal #####
@@ -317,11 +334,18 @@ mainModule <- function(input, output, session){
          paste("Kalorycznosc posilku wynosi", rv$out_kcalMeal, "kcal.")
       })
 
-      output$percentMacro <- renderPlot({
+      output$percentMacro <- plotly::renderPlotly({
          validate(
-            need(rv$out_macroMeal, message = "Wybierz produkt")
+            need(rv$out_kcalMeal, message = "Wybierz produkt")
          )
-         macro_percent_graph(rv$out_macroMeal)
+         macro_pie_chart(rv$out_macroMeal)
+      })
+
+      output$glycemic_index <- renderText({
+         validate(
+            need(rv$out_kcalMeal, message = "Wybierz produkt")
+         )
+         paste("Indeks glikemiczny posiłku wynosi", rv$out_glycemic_index, ".")
       })
 
 }
