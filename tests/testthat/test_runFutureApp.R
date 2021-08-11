@@ -1,7 +1,7 @@
 
 app <- shinytest::ShinyDriver$new(system.file("shiny", package = "Future"))
 
-app$snapshotInit("test_runFutureApp")
+app$snapshotInit("test_runFutureApp_current")
 Sys.sleep(1)
 
 app$setInputs(`main_module-product01` = "Banan")
