@@ -1,47 +1,48 @@
-nazwa	weglowodany	blonnik	przyswajalne_weglo
-Agrest	11.8	3	8.8
-Banan	20	1.7	18.3
-B?b	14	5.8	8.2
-Bu?ka grahamka	40	6.4	33.6
-Buraki	9.8	2.2	7.6
-Cebula	6.9	1.7	5.2
-Chleb pszenny zwyk?y	45.9	2.7	43.2
-Cytryna	9.5	2	7.5
-Dynia	7.7	2.8	4.9
-Fasola bia?a. ziarno suche?	61.6	15.7	45.9
-Fasola szparagowa	7.6	3.9	3.7
-Grejfrut	9.8	1.9	7.9
-Groch, suche ziarno	60.4	15	45.4
-Groszek zielony	17	6	11
-Gruszka	14.4	2.1	12.3
-Jab?ko	12.1	2	10.1
-Kalafior	5	2.4	2.6
-Kalarepa	6.2	2.2	4
-Kapusta bia?a	7.4	2.5	4.9
-Kasza gryczana	70	5.9	64.1
-Kasza j?czmienna p?czak	83.6	5.4	78.2
-Kasza manna	76.7	2.5	74.2
-Makaron dwujajeczny	72	2.6	69.4
-Maliny	12	6.7	5.3
-Marchew	8.7	3.6	5.1
-M?ka pszenna 500	74.9	2.3	72.6
-Og?rek	2.9	0.5	2.4
-Papryka czerwona	6.9	2	4.9
-Pietruszka korze?	17.1	4.9	12.2
-P?atki kukurydziane	83.6	6.6	77
-P?atki owsiane	69.3	6.9	62.4
-Pomara?cza	11.3	1.9	9.4
-Pomidor	5.2	1.2	4
-Por	9.9	2.7	7.2
-Porzeczki czerwone	13.8	7.7	6.1
-Rodzynki	71.2	6.5	64.7
-Ry? bia?y	78.9	2.4	76.5
-Ry? br?zowy?	76.8	8.7	68.1
-Sa?ata	2.9	1.4	1.5
-Soczewica, suche ziarno	59.5	8.9	50.6
-Soja, suche ziarno	34.8	15.7	19.1
-?liwki	15.9	1.6	14.3
-?liwki suszone	70.8	9.4	61.4
-Truskawki	7.2	1.8	5.4
-Winogrona	17.6	1.5	16.1
-Ziemniaki	19.9	1.5	18.4
+"nazwa";"weglowodany";"blonnik";"przyswajalne_weglo"
+"1";"Agrest";"11.8";"3";"8.8"
+"2";"Banan";"20";"1.7";"18.3"
+"3";"Bob";"14";"5.8";"8.2"
+"4";"Bulka grahamka";"40";"6.4";"33.6"
+"5";"Buraki";"9.8";"2.2";"7.6"
+"6";"Cebula";"6.9";"1.7";"5.2"
+"7";"Chleb pszenny zwykly";"45.9";"2.7";"43.2"
+"8";"Cytryna";"9.5";"2";"7.5"
+"9";"Dynia";"7.7";"2.8";"4.9"
+"10";"Fasola biala, ziarno suche";"61.6";"15.7";"45.9"
+"11";"Fasola szparagowa";"7.6";"3.9";"3.7"
+"12";"Grejfrut";"9.8";"1.9";"7.9"
+"13";"Groch, suche ziarno";"60.4";"15";"45.4"
+"14";"Groszek zielony";"17";"6";"11"
+"15";"Gruszka";"14.4";"2.1";"12.3"
+"16";"Jablko";"12.1";"2";"10.1"
+"17";"Kalafior";"5";"2.4";"2.6"
+"18";"Kalarepa";"6.2";"2.2";"4"
+"19";"Kapusta biala";"7.4";"2.5";"4.9"
+"20";"Kasza gryczana";"70";"5.9";"64.1"
+"21";"Kasza jeczmienna peczak";"83.6";"5.4";"78.2"
+"22";"Kasza manna";"76.7";"2.5";"74.2"
+"23";"Makaron dwujajeczny";"72";"2.6";"69.4"
+"24";"Maliny";"12";"6.7";"5.3"
+"25";"Marchew";"8.7";"3.6";"5.1"
+"26";"Maka pszenna 500";"74.9";"2.3";"72.6"
+"27";"Ogorek";"2.9";"0.5";"2.4"
+"28";"Papryka czerwona";"6.9";"2";"4.9"
+"29";"Pietruszka korzen";"17.1";"4.9";"12.2"
+"30";"Platki kukurydziane";"83.6";"6.6";"77"
+"31";"Platki owsiane";"69.3";"6.9";"62.4"
+"32";"Pomarancza";"11.3";"1.9";"9.4"
+"33";"Pomidor";"5.2";"1.2";"4"
+"34";"Por";"9.9";"2.7";"7.2"
+"35";"Porzeczki czerwone";"13.8";"7.7";"6.1"
+"36";"Rodzynki";"71.2";"6.5";"64.7"
+"37";"Ryz bialy";"78.9";"2.4";"76.5"
+"38";"Ryz brazowy";"76.8";"8.7";"68.1"
+"39";"Salata";"2.9";"1.4";"1.5"
+"40";"Soczewica, suche ziarno";"59.5";"8.9";"50.6"
+"41";"Soja, suche ziarno";"34.8";"15.7";"19.1"
+"42";"Sliwki";"15.9";"1.6";"14.3"
+"43";"Sliwki suszone";"70.8";"9.4";"61.4"
+"44";"Truskawki";"7.2";"1.8";"5.4"
+"45";"Winogrona";"17.6";"1.5";"16.1"
+"46";"Ziemniaki";"19.9";"1.5";"18.4"
+"47";"";"0";"0";"0"
