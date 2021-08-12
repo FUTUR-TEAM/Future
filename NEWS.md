@@ -1,6 +1,6 @@
 0.0.13
 
-- added new output to shiny app: glycemicIndex
+- added new output to shiny app: interactive pie chart and glycemicIndex
 
 0.0.12
 
