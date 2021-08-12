@@ -177,7 +177,7 @@ mainModuleUI <- function(id){
                                                         style = "jelly",
                                                         color = "success"),
                 verbatimTextOutput(ns("kcalMeal")),
-                plotOutput(ns("percentMacro")),
+                plotly::plotlyOutput(ns("percentMacro")),
                 verbatimTextOutput(ns("glycemicIndex")))
       )
    )
@@ -334,18 +334,18 @@ mainModule <- function(input, output, session){
          paste("Kalorycznosc posilku wynosi", rv$out_kcalMeal, "kcal.")
       })
 
-      output$percentMacro <- renderPlot({
+      output$percentMacro <- plotly::renderPlotly({
          validate(
             need(rv$out_macroMeal, message = "Wybierz produkt")
          )
-         macro_percent_graph(rv$out_macroMeal)
+         macro_pie_chart(rv$out_macroMeal)
       })
 
       output$glycemicIndex <- renderText({
          validate(
-            need(rv$out_glycemic_index, message = "Wybierz produkt")
+            need(rv$out_glycemicIndex, message = "Wybierz produkt")
          )
-         paste("Indeks glikemiczny posilku wynosi", rv$out_glycemic_index, ".")
+         paste0("Indeks glikemiczny posilku wynosi ", rv$out_glycemicIndex, ".")
       })
 
 }
