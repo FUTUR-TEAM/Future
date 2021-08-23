@@ -4,8 +4,8 @@ app <- shinytest::ShinyDriver$new(system.file("shiny", package = "Future"))
 app$snapshotInit("test_runFutureApp")
 Sys.sleep(1)
 
-app$setInputs(`main_module-product01` = "Banan")
-app$setInputs(`main_module-weight01` = 100)
+app$setValue(name = "main_module-product01", "Banan", iotype = "input")
+app$setValue(name = "main_module-weight01", 100, iotype = "input")
 app$setInputs(`main_module-click` = "click")
 
 app$snapshot()
