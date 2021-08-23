@@ -13,7 +13,7 @@
 #' @export
 glycemic_index <- function(product, weight){
 
-    assertthat::assert_that(assertthat::is.string(product),
+  assertthat::assert_that(assertthat::is.string(product),
                           msg = "product must be string")
   assertthat::assert_that(assertthat::is.number(weight),
                           msg = "weight must be number")
@@ -21,19 +21,28 @@ glycemic_index <- function(product, weight){
   glycemic_info <- utils::read.table(system.file("digestible_carbo.txt", package = "Future"), sep = ";", header = T) %>%
     dplyr::rename("name" = "nazwa", "carbohydrates"	= "weglowodany", "fiber"	= "blonnik", "digestible_carbo" =	"przyswajalne_weglo") %>%
     dplyr::filter(.data$name %in% product)
+
+  if (NROW(glycemic_info) == 0) {
+    glycemic_info[1,] <- 0
+  }
+
   carbo_info <- list(name = product,
                      weight_of_product = weight,
-                     carbohydrates = as.numeric(glycemic_info$carbohydrates) * weight / 100,
-                     digestible_carbohydrates = as.numeric(glycemic_info$digestible_carbo) * weight / 100
+                     carbohydrates = glycemic_info$carbohydrates * weight / 100,
+                     digestible_carbohydrates = glycemic_info$digestible_carbo * weight / 100
   )
 
   glycemic_index_of_product <- utils::read.table(system.file("IG_new.txt", package = "Future"), sep = ";", header = T) %>%
     dplyr::filter(.data$nazwa %in% product)
 
+  if (NROW(glycemic_index_of_product) == 0) {
+    glycemic_index_of_product[1,] <- 0
+  }
+
   total_carbo_info <- list(name = carbo_info$name,
                            weight = carbo_info$weight_of_product,
-                           carbo = carbo_info$carbohydrates,
-                           digestible_carbo = carbo_info$digestible_carbohydrates,
+                           carbo = as.numeric(carbo_info$carbohydrates),
+                           digestible_carbo = as.numeric(carbo_info$digestible_carbohydrates),
                            IG = as.numeric(glycemic_index_of_product$IG))
 
   total_carbo_info
