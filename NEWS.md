@@ -1,3 +1,7 @@
+0.0.14
+
+- changed tables
+
 0.0.13
 
 - added new output to shiny app: interactive pie chart and glycemicIndex
@@ -15,7 +19,7 @@
 
 0.0.10
 
--fixed problems
+- fixed problems
 
 0.0.9
 
