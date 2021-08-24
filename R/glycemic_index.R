@@ -18,7 +18,7 @@ glycemic_index <- function(product, weight){
   assertthat::assert_that(assertthat::is.number(weight),
                           msg = "weight must be number")
 
-  glycemic_info <- utils::read.table(system.file("digestible_carbo.txt", package = "Future"), sep = "\t", header = T) %>%
+  glycemic_info <- utils::read.table(system.file("digestible_carbo.txt", package = "Future"), sep = ";", header = T) %>%
     dplyr::rename("name" = "nazwa", "carbohydrates"	= "weglowodany", "fiber"	= "blonnik", "digestible_carbo" =	"przyswajalne_weglo") %>%
     dplyr::filter(.data$name %in% product)
 
@@ -32,7 +32,7 @@ glycemic_index <- function(product, weight){
                      digestible_carbohydrates = glycemic_info$digestible_carbo * weight / 100
   )
 
-  glycemic_index_of_product <- utils::read.table(system.file("glycemic_table.txt", package = "Future"), sep = ";", header = T) %>%
+  glycemic_index_of_product <- utils::read.table(system.file("IG_new.txt", package = "Future"), sep = ";", header = T) %>%
     dplyr::filter(.data$nazwa %in% product)
 
   if (NROW(glycemic_index_of_product) == 0) {
