@@ -354,9 +354,9 @@ mainModule <- function(input, output, session){
             inputId <- paste0("weight0", x)
             out_macroMeal_exist <-
                as.numeric(reactiveValuesToList(input)[[inputId]]) > 0
-            feedbackWarning(inputId,
-                            !out_macroMeal_exist,
-                            "Uzupelnij wage produktu")
+            shinyFeedback::feedbackWarning(inputId,
+                                           !out_macroMeal_exist,
+                                           "Uzupelnij wage produktu")
 
             out_macroMeal_exist
          })
