@@ -4,6 +4,7 @@
 #'
 #' @import shinydashboard
 #' @import shiny
+#' @import shinyFeedback
 #'
 #' @export
 mainModuleUI <- function(id){
@@ -16,6 +17,7 @@ mainModuleUI <- function(id){
 
    body <- dashboardBody(
       fluidPage(
+         shinyFeedback::useShinyFeedback(),
          shinyjs::useShinyjs(),
          column(6,
                 div(id = ns("box01"), box(
@@ -209,11 +211,21 @@ mainModule <- function(input, output, session){
             sep = ";",
             header = TRUE
          )
-   shinyWidgets::updatePickerInput(session = session, inputId = "product01", choices = c("", product_table$Nazwa))
-   shinyWidgets::updatePickerInput(session = session, inputId = "product02", choices = c("", product_table$Nazwa))
-   shinyWidgets::updatePickerInput(session = session, inputId = "product03", choices = c("", product_table$Nazwa))
-   shinyWidgets::updatePickerInput(session = session, inputId = "product04", choices = c("", product_table$Nazwa))
-   shinyWidgets::updatePickerInput(session = session, inputId = "product05", choices = c("", product_table$Nazwa))
+   shinyWidgets::updatePickerInput(session = session,
+                                   inputId = "product01",
+                                   choices = c("", product_table$Nazwa))
+   shinyWidgets::updatePickerInput(session = session,
+                                   inputId = "product02",
+                                   choices = c("", product_table$Nazwa))
+   shinyWidgets::updatePickerInput(session = session,
+                                   inputId = "product03",
+                                   choices = c("", product_table$Nazwa))
+   shinyWidgets::updatePickerInput(session = session,
+                                   inputId = "product04",
+                                   choices = c("", product_table$Nazwa))
+   shinyWidgets::updatePickerInput(session = session,
+                                   inputId = "product05",
+                                   choices = c("", product_table$Nazwa))
 
 ##### adding new products for the meal #####
 
@@ -330,14 +342,27 @@ mainModule <- function(input, output, session){
       output$kcalMeal <- renderText({
          validate(
             need(rv$out_kcalMeal, message = "Wybierz produkt")
-         )
+            )
          paste("Kalorycznosc posilku wynosi", rv$out_kcalMeal, "kcal.")
       })
 
       output$percentMacro <- plotly::renderPlotly({
-         validate(
-            need(rv$out_macroMeal, message = "Wybierz produkt")
-         )
+
+         req(rv$out_macroMeal)
+
+         output_macroMeal <- lapply(1:5, FUN = function(x){
+            inputId <- paste0("weight0", x)
+            out_macroMeal_exist <-
+               as.numeric(reactiveValuesToList(input)[[inputId]]) > 0
+            shinyFeedback::feedbackWarning(inputId,
+                                           !out_macroMeal_exist,
+                                           "Uzupelnij wage produktu")
+
+            out_macroMeal_exist
+         })
+
+         req(any(unlist(output_macroMeal)), cancelOutput = TRUE)
+
          macro_pie_chart(rv$out_macroMeal)
       })
 
