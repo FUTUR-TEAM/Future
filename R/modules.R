@@ -4,6 +4,7 @@
 #'
 #' @import shinydashboard
 #' @import shiny
+#' @import shinyFeedback
 #'
 #' @export
 mainModuleUI <- function(id){
@@ -16,6 +17,7 @@ mainModuleUI <- function(id){
 
    body <- dashboardBody(
       fluidPage(
+         shinyFeedback::useShinyFeedback(),
          shinyjs::useShinyjs(),
          fluidRow(
             column(6,
@@ -152,9 +154,22 @@ mainModule <- function(input, output, session){
       })
 
       output$percentMacro <- plotly::renderPlotly({
-         validate(
-            need(rv$out_macroMeal, message = "Wybierz produkt")
-         )
+
+         req(rv$out_macroMeal)
+
+         output_macroMeal <- lapply(1:5, FUN = function(x){
+            inputId <- paste0("weight0", x)
+            out_macroMeal_exist <-
+               as.numeric(reactiveValuesToList(input)[[inputId]]) > 0
+            shinyFeedback::feedbackWarning(inputId,
+                                           !out_macroMeal_exist,
+                                           "Uzupelnij wage produktu")
+
+            out_macroMeal_exist
+         })
+
+         req(any(unlist(output_macroMeal)), cancelOutput = TRUE)
+
          macro_pie_chart(rv$out_macroMeal)
       })
 
