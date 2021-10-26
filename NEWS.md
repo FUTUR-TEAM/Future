@@ -1,3 +1,7 @@
+0.0.16
+
+- refactoring: input in each ingredients is generated dynamically
+
 0.0.15
 
 - added shinyFeedback to second input
