@@ -1,6 +1,6 @@
 0.0.16
 
-- refactoring: input in each ingredients is generated dynamically
+- refactoring: input for each ingredient is generated dynamically
 
 0.0.15
 
