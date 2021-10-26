@@ -116,6 +116,7 @@ mainModule <- function(input, output, session){
       lapply(
          X = 1:rv$n,
          FUN = function(i) {
+
             req(paste0("#", session$ns("product"), i))
 
             rv$out_kcalMeal <-
@@ -147,18 +148,17 @@ mainModule <- function(input, output, session){
 
       output$kcalMeal <- renderText({
          validate(
-            need(input[[paste0(session$ns("product"), rv$n)]],
+            need(input[[paste0("product", rv$n)]],
                  message = "Wybierz produkt")
          )
          paste("Kalorycznosc posilku wynosi", rv$out_kcalMeal, "kcal.")
       })
 
       output$percentMacro <- plotly::renderPlotly({
-
          req(rv$out_macroMeal)
 
-         output_macroMeal <- lapply(1:5, FUN = function(x){
-            inputId <- paste0("weight0", x)
+          output_macroMeal <- lapply(1:rv$n, FUN = function(x){
+            inputId <- paste0("weight", rv$n)
             out_macroMeal_exist <-
                as.numeric(reactiveValuesToList(input)[[inputId]]) > 0
             shinyFeedback::feedbackWarning(inputId,
