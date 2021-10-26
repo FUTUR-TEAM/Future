@@ -1,75 +1,207 @@
 {
   "input": {
-    "main_module-add01": 0,
-    "main_module-add02": 0,
-    "main_module-add03": 0,
-    "main_module-add04": 0,
+    "main_module-add_one": 1,
     "main_module-click": 1,
-    "main_module-product01": "Banan",
-    "main_module-product02": "",
-    "main_module-product03": "",
-    "main_module-product04": "",
-    "main_module-product05": "",
-    "main_module-remove02": 0,
-    "main_module-remove03": 0,
-    "main_module-remove04": 0,
-    "main_module-remove05": 0,
-    "main_module-weight01": 100,
-    "main_module-weight02": 0,
-    "main_module-weight03": 0,
-    "main_module-weight04": 0,
-    "main_module-weight05": 0,
+    "main_module-product1": "Banan",
+    "main_module-remove1": 0,
+    "main_module-weight1": 100,
     "sidebarCollapsed": true,
     "sidebarItemExpanded": null
   },
   "output": {
+    "main_module-glycemicIndex": "Indeks glikemiczny posilku wynosi 60.",
     "main_module-kcalMeal": "Kalorycznosc posilku wynosi 74.3 kcal.",
     "main_module-percentMacro": {
-      "src": "[image data sha1: 8c1cef348657324a70f68ff4e2d06cfa9db274a9]",
-      "width": 358,
-      "height": 400,
-      "alt": "Plot object",
-      "coordmap": {
-        "panels": [
+      "x": {
+        "layout": {
+          "margin": {
+            "b": 40,
+            "l": 60,
+            "t": 25,
+            "r": 10
+          },
+          "title": "The percentage of macronutrients in the prepared meal",
+          "xaxis": {
+            "showgrid": false,
+            "zeroline": false,
+            "showticklabels": false
+          },
+          "yaxis": {
+            "showgrid": false,
+            "zeroline": false,
+            "showticklabels": false
+          },
+          "hovermode": "closest",
+          "showlegend": true
+        },
+        "source": "A",
+        "config": {
+          "showSendToCloud": false
+        },
+        "data": [
           {
-            "panel": 1,
-            "row": 1,
-            "col": 1,
-            "panel_vars": {
-
+            "labels": [
+              "protein",
+              "fat",
+              "carbohydrates"
+            ],
+            "values": [
+              4.95,
+              1.65,
+              93.41
+            ],
+            "textposition": [
+              "inside",
+              "inside",
+              "inside"
+            ],
+            "texttemplate": [
+              "protein %{percent:.2%f}",
+              "fat %{percent:.2%f}",
+              "carbohydrates %{percent:.2%f}"
+            ],
+            "insidetextfont": {
+              "color": "#000000"
             },
-            "log": {
-              "x": null,
-              "y": null
+            "hoverinfo": [
+              "text",
+              "text",
+              "text"
+            ],
+            "text": [
+              "0.9  gram",
+              "0.3  gram",
+              "17  gram"
+            ],
+            "marker": {
+              "color": "rgba(31,119,180,1)",
+              "colors": [
+                "rgb(208,223,247)",
+                "rgb(245,188,199)",
+                "rgb(161,240,174)"
+              ],
+              "line": {
+                "color": "#FFFFFF",
+                "width": 1
+              }
             },
-            "domain": {
-              "left": 2,
-              "right": 4,
-              "bottom": 0,
-              "top": 1
-            },
-            "mapping": {
-              "x": null,
-              "y": null,
-              "ymax": ".data$ymax",
-              "ymin": ".data$ymin",
-              "xmax": "4",
-              "xmin": "3",
-              "fill": ".data$macro_name"
-            },
-            "range": {
-              "left": 0,
-              "right": 269.571181307389,
-              "bottom": 334.785540653695,
-              "top": 65.2143593463055
-            }
+            "showlegend": false,
+            "type": "pie",
+            "frame": null
           }
         ],
-        "dims": {
-          "width": 358,
-          "height": 400
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.2,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "3.5.1",
+          "src": {
+            "href": "jquery-3.5.1"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.1.1",
+          "src": {
+            "href": "crosstalk-1.1.1"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "1.57.1",
+          "src": {
+            "href": "plotly-htmlwidgets-css-1.57.1"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "1.57.1",
+          "src": {
+            "href": "plotly-main-1.57.1"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
         }
-      }
+      ]
     }
   },
   "export": {
