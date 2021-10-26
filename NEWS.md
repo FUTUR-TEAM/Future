@@ -1,3 +1,7 @@
+0.0.16
+
+- refactoring: input for each ingredient is generated dynamically
+
 0.0.15
 
 - added shinyFeedback to second input
@@ -14,12 +18,10 @@
 
 - added shiny tests
 
-
 0.0.11
 
 - added function to interactive pie chart
 - added tests
-
 
 0.0.10
 

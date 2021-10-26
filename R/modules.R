@@ -19,161 +19,13 @@ mainModuleUI <- function(id){
       fluidPage(
          shinyFeedback::useShinyFeedback(),
          shinyjs::useShinyjs(),
-         column(6,
-                div(id = ns("box01"), box(
-                   width = 12,
-                   column(6,
-                          shinyWidgets::pickerInput(
-                             inputId = ns("product01"),
-                             label = "Wybierz produkt",
-                             choices = "",
-                             options = list(`live-search` = TRUE)
-                          )),
-                   column(4,
-                          numericInput(
-                             inputId = ns("weight01"),
-                             label = "Wpisz gramature produktu",
-                             value = 0
-                          )),
-                   shinyWidgets::actionBttn(
-                      inputId = ns("add01"),
-                      label = "Dodaj produkt",
-                      size = "sm",
-                      style = "jelly",
-                      color = "primary"
-                   )
-                )),
-                shinyjs::hidden(div(id = ns("box02"), box(
-                   width = 12,
-                   column(
-                      6,
-                      shinyWidgets::pickerInput(
-                         inputId = ns("product02"),
-                         label = "Wybierz produkt",
-                         choices = "",
-                         options = list(`live-search` = TRUE)
-                      )
-                   ),
-                   column(
-                      4,
-                      numericInput(
-                         inputId = ns("weight02"),
-                         label = "Wpisz gramature produktu",
-                         value = 0
-                      )
-                   ),
-                   shinyWidgets::actionBttn(
-                      inputId = ns("add02"),
-                      label = "Dodaj produkt",
-                      size = "sm",
-                      style = "jelly",
-                      color = "primary"
-                   ),
-                   shinyWidgets::actionBttn(
-                      inputId = ns("remove02"),
-                      label = "Usun produkt",
-                      size = "sm",
-                      style = "jelly",
-                      color = "danger"
-                   ),
-                ))),
-                shinyjs::hidden(div(id = ns("box03"), box(
-                   width = 12,
-                   column(
-                      6,
-                      shinyWidgets::pickerInput(
-                         inputId = ns("product03"),
-                         label = "Wybierz produkt",
-                         choices = "",
-                         options = list(`live-search` = TRUE)
-                      )
-                   ),
-                   column(
-                      4,
-                      numericInput(
-                         inputId = ns("weight03"),
-                         label = "Wpisz gramature produktu",
-                         value = 0
-                      )
-                   ),
-                   shinyWidgets::actionBttn(
-                      inputId = ns("add03"),
-                      label = "Dodaj produkt",
-                      size = "sm",
-                      style = "jelly",
-                      color = "primary"
-                   ),
-                   shinyWidgets::actionBttn(
-                      inputId = ns("remove03"),
-                      label = "Usun produkt",
-                      size = "sm",
-                      style = "jelly",
-                      color = "danger"
-                   ),
-                ))),
-                shinyjs::hidden(div(id = ns("box04"), box(
-                   width = 12,
-                   column(
-                      6,
-                      shinyWidgets::pickerInput(
-                         inputId = ns("product04"),
-                         label = "Wybierz produkt",
-                         choices = "",
-                         options = list(`live-search` = TRUE)
-                      )
-                   ),
-                   column(
-                      4,
-                      numericInput(
-                         inputId = ns("weight04"),
-                         label = "Wpisz gramature produktu",
-                         value = 0
-                      )
-                   ),
-                   shinyWidgets::actionBttn(
-                      inputId = ns("add04"),
-                      label = "Dodaj produkt",
-                      size = "sm",
-                      style = "jelly",
-                      color = "primary"
-                   ),
-                   shinyWidgets::actionBttn(
-                      inputId = ns("remove04"),
-                      label = "Usun produkt",
-                      size = "sm",
-                      style = "jelly",
-                      color = "danger"
-                   ),
-                ))),
-                shinyjs::hidden(div(id = ns("box05"), box(
-                   width = 12,
-                   column(
-                      6,
-                      shinyWidgets::pickerInput(
-                         inputId = ns("product05"),
-                         label = "Wybierz produkt",
-                         choices = "",
-                         options = list(`live-search` = TRUE)
-                      )
-                   ),
-                   column(
-                      4,
-                      numericInput(
-                         inputId = ns("weight05"),
-                         label = "Wpisz gramature produktu",
-                         value = 0
-                      )
-                   ),
-                   shinyWidgets::actionBttn(
-                      inputId = ns("remove05"),
-                      label = "Usun produkt",
-                      size = "sm",
-                      style = "jelly",
-                      color = "danger"
-                   ),
-                ))),
-         ),
-         column(5, offset = 1, shinyWidgets::actionBttn(inputId = ns("click"),
+         fluidRow(
+            column(6,
+                shinyWidgets::actionBttn(inputId = ns("add_one"),
+                                         "Dodaj kolejny produkt"),
+                div(id = ns("placeholder"))),
+            column(5, offset = 1,
+                shinyWidgets::actionBttn(inputId = ns("click"),
                                                         label = "Oblicz",
                                                         size = "sm",
                                                         style = "jelly",
@@ -181,8 +33,8 @@ mainModuleUI <- function(id){
                 verbatimTextOutput(ns("kcalMeal")),
                 plotly::plotlyOutput(ns("percentMacro")),
                 verbatimTextOutput(ns("glycemicIndex")))
-      )
-   )
+         )
+      ))
 
    dashboardPage(header, sidebar, body)
 
@@ -201,9 +53,11 @@ mainModule <- function(input, output, session){
 
    shinyjs::addClass(selector = "body", class = "sidebar-collapse")
 
-   rv <- reactiveValues()
+   rv <- reactiveValues(
+      n = 0
+   )
 
-##### loading caloric table and updating inputs with data from table #####
+##### loading caloric table #####
 
       product_table <-
          utils::read.table(
@@ -211,147 +65,104 @@ mainModule <- function(input, output, session){
             sep = ";",
             header = TRUE
          )
-   shinyWidgets::updatePickerInput(session = session,
-                                   inputId = "product01",
-                                   choices = c("", product_table$Nazwa))
-   shinyWidgets::updatePickerInput(session = session,
-                                   inputId = "product02",
-                                   choices = c("", product_table$Nazwa))
-   shinyWidgets::updatePickerInput(session = session,
-                                   inputId = "product03",
-                                   choices = c("", product_table$Nazwa))
-   shinyWidgets::updatePickerInput(session = session,
-                                   inputId = "product04",
-                                   choices = c("", product_table$Nazwa))
-   shinyWidgets::updatePickerInput(session = session,
-                                   inputId = "product05",
-                                   choices = c("", product_table$Nazwa))
 
 ##### adding new products for the meal #####
 
-      observeEvent(input$add01, {
-         shinyjs::show("box02")
-         shinyjs::hide("add01")
-      })
-      observeEvent(input$add02, {
-         shinyjs::show("box03")
-         shinyjs::hide("add02")
-         shinyjs::hide("remove02")
-      })
-      observeEvent(input$add03, {
-         shinyjs::show("box04")
-         shinyjs::hide("add03")
-         shinyjs::hide("remove03")
-      })
-      observeEvent(input$add04, {
-         shinyjs::show("box05")
-         shinyjs::hide("add04")
-         shinyjs::hide("remove04")
-      })
+   observeEvent(input$add_one, {
+      rv$n <- rv$n + 1
 
-##### removing products from the meal #####
+      insertUI(
+         selector = paste0("#", session$ns("placeholder")),
+         where = "beforeEnd",
+         ui = div(
+            id = paste0(session$ns("box"), rv$n),
+            column(8,
+                   shinyWidgets::pickerInput(
+                      inputId = paste0(session$ns("product"), rv$n),
+                      label = "wybierz produkt",
+                      choices = c("", product_table$Nazwa),
+                      options = list(`live-search` = TRUE)
+                      )),
+            column(4,
+                   numericInput(
+                      inputId = paste0(session$ns("weight"), rv$n),
+                      label = "Wpisz gramature produktu",
+                      value = 0
+                      )),
+            shinyWidgets::actionBttn(inputId = paste0(session$ns("remove"), rv$n),
+                                     label = "usun produkt",
+                                     color = "danger")
+         ))
+   })
 
-      observeEvent(input$remove02, {
-         shinyjs::hide("box02")
-         shinyjs::show("add01")
-         shinyjs::show("remove01")
-         updateSelectInput(inputId = "product02", selected = "")
-         updateNumericInput(inputId = "weight02", value = 0)
-      })
-      observeEvent(input$remove03, {
-         shinyjs::hide("box03")
-         shinyjs::show("add02")
-         shinyjs::show("remove02")
-         updateSelectInput(inputId = "product03", selected = "")
-         updateNumericInput(inputId = "weight03", value = 0)
-      })
-      observeEvent(input$remove04, {
-         shinyjs::hide("box04")
-         shinyjs::show("add03")
-         shinyjs::show("remove03")
-         updateSelectInput(inputId = "product04", selected = "")
-         updateNumericInput(inputId = "weight04", value = 0)
-      })
-      observeEvent(input$remove05, {
-         shinyjs::hide("box05")
-         shinyjs::show("add04")
-         shinyjs::show("remove04")
-         updateSelectInput(inputId = "product05", selected = "")
-         updateNumericInput(inputId = "weight05", value = 0)
-      })
+   lapply(X = 1:100,
+          FUN = function(i){
+
+             observeEvent(input[[paste0("remove", i)]], {
+                rv[[paste0("box", i)]] <- input[[paste0("remove", i)]]
+                removeUI(
+                   selector = paste0("#",  session$ns("box"), i)
+                )
+
+                rv$n <- rv$n - 1
+             })
+          }
+   )
 
 ##### creating lists for calculating energy of meal #####
 
-      observeEvent(input$click, {
-         req(input$product01)
-         rv$out_kcalMeal <-
-            energy_of_meal(
-               list_of_products = list(
-                  input$product01,
-                  input$product02,
-                  input$product03,
-                  input$product04,
-                  input$product05
-               ),
-               weight_of_products = list(
-                  as.numeric(input$weight01),
-                  as.numeric(input$weight02),
-                  as.numeric(input$weight03),
-                  as.numeric(input$weight04),
-                  as.numeric(input$weight05)
+
+   observeEvent(input$click, {
+      lapply(
+         X = 1:rv$n,
+         FUN = function(i) {
+
+            req(paste0("#", session$ns("product"), i))
+
+            rv$out_kcalMeal <-
+               energy_of_meal(
+                  list_of_products = list(input[[paste0("product", i)]]),
+                  weight_of_products = list(
+                     as.numeric(input[[paste0("weight", i)]]))
                )
-            )
-         rv$out_macroMeal <-
-            macronutrients_of_meal(
-               list_of_products = list(
-                  input$product01,
-                  input$product02,
-                  input$product03,
-                  input$product04,
-                  input$product05
-               ),
-               weight_of_products = list(
-                  as.numeric(input$weight01),
-                  as.numeric(input$weight02),
-                  as.numeric(input$weight03),
-                  as.numeric(input$weight04),
-                  as.numeric(input$weight05)
+
+##### creating lists for calculating macronutrients of meal #####
+
+            rv$out_macroMeal <-
+               macronutrients_of_meal(
+                  list_of_products = list(input[[paste0("product", i)]]),
+                  weight_of_products = list(
+                     as.numeric(input[[paste0("weight", i)]]))
                )
-            )
-         rv$out_glycemicIndex <-
-            glycemic_index_of_meal(
-               list_of_products = list(
-                  input$product01,
-                  input$product02,
-                  input$product03,
-                  input$product04,
-                  input$product05
-               ),
-               weight_of_products = list(
-                  as.numeric(input$weight01),
-                  as.numeric(input$weight02),
-                  as.numeric(input$weight03),
-                  as.numeric(input$weight04),
-                  as.numeric(input$weight05)
+
+##### creating lists for calculating glycemic index of meal #####
+
+            rv$out_glycemicIndex <-
+               glycemic_index_of_meal(
+                  list_of_products = list(input[[paste0("product", i)]]),
+                  weight_of_products = list(
+                     as.numeric(input[[paste0("weight", i)]]))
                )
-            )
-      })
+         }
+      )
+
+   })
 
 ##### displaying energy of preparing meal #####
 
       output$kcalMeal <- renderText({
          validate(
-            need(rv$out_kcalMeal, message = "Wybierz produkt")
-            )
+            need(input[[paste0("product", rv$n)]],
+                 message = "Wybierz produkt")
+         )
          paste("Kalorycznosc posilku wynosi", rv$out_kcalMeal, "kcal.")
       })
 
       output$percentMacro <- plotly::renderPlotly({
-
          req(rv$out_macroMeal)
 
-         output_macroMeal <- lapply(1:5, FUN = function(x){
-            inputId <- paste0("weight0", x)
+          output_macroMeal <- lapply(1:rv$n, FUN = function(x){
+            inputId <- paste0("weight", rv$n)
             out_macroMeal_exist <-
                as.numeric(reactiveValuesToList(input)[[inputId]]) > 0
             shinyFeedback::feedbackWarning(inputId,
@@ -372,7 +183,4 @@ mainModule <- function(input, output, session){
          )
          paste0("Indeks glikemiczny posilku wynosi ", rv$out_glycemicIndex, ".")
       })
-
 }
-
-
