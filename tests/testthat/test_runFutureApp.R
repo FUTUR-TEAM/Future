@@ -6,8 +6,8 @@ app$waitForShiny()
 
 app$click("main_module-add_one")
 app$waitForShiny()
-app$setValue(name = "main_module-product1", "Banan", iotype = "input")
-app$setValue(name = "main_module-weight1", 100, iotype = "input")
+app$setValue("main_module-product1", "Banan")
+app$setValue("main_module-weight1", 100)
 app$click("main_module-click")
 
 app$snapshot()
