@@ -57,7 +57,7 @@ mainModule <- function(input, output, session){
       n = 0
    )
 
-##### loading caloric table and updating inputs with data from table #####
+##### loading caloric table #####
 
       product_table <-
          utils::read.table(
@@ -109,7 +109,7 @@ mainModule <- function(input, output, session){
           }
    )
 
-##########
+##### creating lists for calculating energy of meal #####
 
 
    observeEvent(input$click, {
@@ -126,12 +126,16 @@ mainModule <- function(input, output, session){
                      as.numeric(input[[paste0("weight", i)]]))
                )
 
+##### creating lists for calculating macronutrients of meal #####
+
             rv$out_macroMeal <-
                macronutrients_of_meal(
                   list_of_products = list(input[[paste0("product", i)]]),
                   weight_of_products = list(
                      as.numeric(input[[paste0("weight", i)]]))
                )
+
+##### creating lists for calculating glycemic index of meal #####
 
             rv$out_glycemicIndex <-
                glycemic_index_of_meal(
