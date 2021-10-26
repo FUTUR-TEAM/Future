@@ -39,6 +39,9 @@ app$snapshot()
 all_values <- app$getAllValues()
 testthat::expect_equal(
   all_values$output$`main_module-kcalMeal`,
+
+########## check why the value change, old value: 1514.4 kcal ##########
+
   "Kalorycznosc posilku wynosi 501.7 kcal."
 )
 
