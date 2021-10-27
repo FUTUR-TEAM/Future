@@ -159,7 +159,7 @@ mainModule <- function(input, output, session){
       output_macroMeal <- lapply(
          1:rv$n,
          FUN = function(x) {
-            inputId <- paste0("weight", rv$n)
+            inputId <- paste0("weight", x)
             out_macroMeal_exist <-
                as.numeric(isolate(reactiveValuesToList(input))[[inputId]]) > 0
             shinyFeedback::feedbackWarning(inputId,!out_macroMeal_exist,
