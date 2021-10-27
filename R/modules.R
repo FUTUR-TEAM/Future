@@ -115,28 +115,27 @@ mainModule <- function(input, output, session){
          X = 1:rv$n,
          FUN = function(i) {
 
-            req(paste0("#", session$ns("product"), i))
+            req(paste0("#", session$ns("product"), rv$n))
+
+            list_of_products <- list()
+            for (i in 1:rv$n) {
+               list_of_products[[i]] <- input[[paste0("product", i)]]
+            }
+
+            weight_of_products <- list()
+            for (i in 1:rv$n) {
+               weight_of_products[[i]] <- as.numeric(input[[paste0("weight", i)]])
+            }
+
 
             rv$out_kcalMeal <-
-               energy_of_meal(
-                  list_of_products = list(input[[paste0("product", i)]]),
-                  weight_of_products = list(
-                     as.numeric(input[[paste0("weight", i)]]))
-               )
+               energy_of_meal(list_of_products, weight_of_products)
 
             rv$out_macroMeal <-
-               macronutrients_of_meal(
-                  list_of_products = list(input[[paste0("product", i)]]),
-                  weight_of_products = list(
-                     as.numeric(input[[paste0("weight", i)]]))
-               )
+               macronutrients_of_meal(list_of_products, weight_of_products)
 
             rv$out_glycemicIndex <-
-               glycemic_index_of_meal(
-                  list_of_products = list(input[[paste0("product", i)]]),
-                  weight_of_products = list(
-                     as.numeric(input[[paste0("weight", i)]]))
-               )
+               glycemic_index_of_meal(list_of_products, weight_of_products)
          }
       )
 
