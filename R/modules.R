@@ -95,19 +95,18 @@ mainModule <- function(input, output, session){
          ))
    })
 
-   observeEvent(input[[paste0("remove", rv$n)]], {
-      lapply(
-         X = 1:rv$n,
-         FUN = function(i) {
+      lapply(X = 1:100,
+          FUN = function(i){
 
-            rv[[paste0("box", i)]] <- input[[paste0("remove", i)]]
-            removeUI(
-               selector = paste0("#",  session$ns("box"), i)
-            )
+             observeEvent(input[[paste0("remove", i)]],{
+                rv[[paste0("box", i)]] <- input[[paste0("remove", i)]]
+                removeUI(
+                   selector = paste0("#", session$ns("box"), i)
+                )
 
-            rv$n <- rv$n - 1
-         })
-   })
+                rv$n <- rv$n - 1
+             })
+          })
 
 ##### creating lists for calculating energy of meal #####
 
