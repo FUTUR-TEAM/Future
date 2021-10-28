@@ -73,12 +73,12 @@ glycemic_index_of_meal <- function(list_of_products, weight_of_products){
                         msg = "elements of weight_of_products must be numeric")
   assertthat::assert_that(length(list_of_products) == length(weight_of_products),
                         msg = "list_of_products and weight_of_products must be the same length")
-
   dataframe_IG <- data.frame()
   for (i in seq_len(length(list_of_products))) {
    IG <- glycemic_index(list_of_products[[i]], weight_of_products[[i]])
      dataframe_IG <- base::rbind(dataframe_IG, IG)
   }
+  # browser()
 
   sum_digestible_carbo <- colSums(dataframe_IG[4])
   percent_digestible_carbo <- round(dataframe_IG$digestible_carbo / sum_digestible_carbo, 4)
@@ -90,4 +90,8 @@ glycemic_index_of_meal <- function(list_of_products, weight_of_products){
   sum_IG_of_meal <- sum(dataframe_IG$IG_of_product)
 
   sum_IG_of_meal
+
+  if (is.nan(sum_IG_of_meal)){
+    print(0)
+  }
 }
