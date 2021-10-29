@@ -1,25 +1,10 @@
 {
   "input": {
-    ".clientValue-default-plotlyCrosstalkOpts": {
-      "on": "plotly_click",
-      "persistent": false,
-      "dynamic": false,
-      "selectize": false,
-      "opacityDim": 0.2,
-      "selected": {
-        "opacity": 1
-      },
-      "debounce": 0,
-      "color": [
-
-      ]
-    },
     "main_module-add_one": 1,
     "main_module-click": 1,
     "main_module-product1": "Banan",
     "main_module-remove1": 0,
     "main_module-weight1": 100,
-    "plotly_afterplot-A": "\"main_module-percentMacro\"",
     "sidebarCollapsed": true,
     "sidebarItemExpanded": null
   },
