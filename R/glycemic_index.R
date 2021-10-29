@@ -78,7 +78,6 @@ glycemic_index_of_meal <- function(list_of_products, weight_of_products){
    IG <- glycemic_index(list_of_products[[i]], weight_of_products[[i]])
      dataframe_IG <- base::rbind(dataframe_IG, IG)
   }
-  # browser()
 
   sum_digestible_carbo <- colSums(dataframe_IG[4])
   percent_digestible_carbo <- round(dataframe_IG$digestible_carbo / sum_digestible_carbo, 4)
@@ -89,9 +88,9 @@ glycemic_index_of_meal <- function(list_of_products, weight_of_products){
 
   sum_IG_of_meal <- sum(dataframe_IG$IG_of_product)
 
-  sum_IG_of_meal
-
   if (is.nan(sum_IG_of_meal)){
     print(0)
+  } else {
+    sum_IG_of_meal
   }
 }
