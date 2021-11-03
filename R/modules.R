@@ -57,7 +57,7 @@ mainModule <- function(input, output, session){
       n = 0
    )
 
-##### loading caloric table #####
+##### loading caloric table and updating inputs with data from table #####
 
       product_table <-
          utils::read.table(
@@ -95,54 +95,49 @@ mainModule <- function(input, output, session){
          ))
    })
 
-   lapply(X = 1:100,
+      lapply(X = 1:100,
           FUN = function(i){
 
-             observeEvent(input[[paste0("remove", i)]], {
+             observeEvent(input[[paste0("remove", i)]],{
                 rv[[paste0("box", i)]] <- input[[paste0("remove", i)]]
                 removeUI(
-                   selector = paste0("#",  session$ns("box"), i)
+                   selector = paste0("#", session$ns("box"), i)
                 )
 
                 rv$n <- rv$n - 1
              })
-          }
-   )
+          })
 
 ##### creating lists for calculating energy of meal #####
-
 
    observeEvent(input$click, {
       lapply(
          X = 1:rv$n,
          FUN = function(i) {
 
-            req(paste0("#", session$ns("product"), i))
+            validate(
+               need(paste0("#", session$ns("product"), rv$n),
+                    message = "Wybierz produkt")
+               )
+
+            list_of_products <- list()
+            for (i in 1:rv$n) {
+               list_of_products[[i]] <- input[[paste0("product", i)]]
+            }
+
+            weight_of_products <- list()
+            for (i in 1:rv$n) {
+               weight_of_products[[i]] <- as.numeric(input[[paste0("weight", i)]])
+            }
 
             rv$out_kcalMeal <-
-               energy_of_meal(
-                  list_of_products = list(input[[paste0("product", i)]]),
-                  weight_of_products = list(
-                     as.numeric(input[[paste0("weight", i)]]))
-               )
-
-##### creating lists for calculating macronutrients of meal #####
+               energy_of_meal(list_of_products, weight_of_products)
 
             rv$out_macroMeal <-
-               macronutrients_of_meal(
-                  list_of_products = list(input[[paste0("product", i)]]),
-                  weight_of_products = list(
-                     as.numeric(input[[paste0("weight", i)]]))
-               )
-
-##### creating lists for calculating glycemic index of meal #####
+               macronutrients_of_meal(list_of_products, weight_of_products)
 
             rv$out_glycemicIndex <-
-               glycemic_index_of_meal(
-                  list_of_products = list(input[[paste0("product", i)]]),
-                  weight_of_products = list(
-                     as.numeric(input[[paste0("weight", i)]]))
-               )
+               glycemic_index_of_meal(list_of_products, weight_of_products)
          }
       )
 
@@ -158,24 +153,29 @@ mainModule <- function(input, output, session){
          paste("Kalorycznosc posilku wynosi", rv$out_kcalMeal, "kcal.")
       })
 
-      output$percentMacro <- plotly::renderPlotly({
-         req(rv$out_macroMeal)
+   output$percentMacro <- plotly::renderPlotly({
 
-          output_macroMeal <- lapply(1:rv$n, FUN = function(x){
-            inputId <- paste0("weight", rv$n)
+      req(rv$out_macroMeal)
+
+      #browser()
+
+      output_macroMeal <- lapply(
+         1:rv$n,
+         FUN = function(x) {
+            inputId <- paste0("weight", x)
             out_macroMeal_exist <-
-               as.numeric(reactiveValuesToList(input)[[inputId]]) > 0
-            shinyFeedback::feedbackWarning(inputId,
-                                           !out_macroMeal_exist,
+               as.numeric(isolate(reactiveValuesToList(input))[[inputId]]) > 0
+            shinyFeedback::feedbackWarning(inputId,!out_macroMeal_exist,
                                            "Uzupelnij wage produktu")
 
             out_macroMeal_exist
-         })
+         }
+      )
 
-         req(any(unlist(output_macroMeal)), cancelOutput = TRUE)
+      req(all(unlist(output_macroMeal)), cancelOutput = TRUE)
 
-         macro_pie_chart(rv$out_macroMeal)
-      })
+      macro_pie_chart(rv$out_macroMeal)
+   })
 
       output$glycemicIndex <- renderText({
          validate(

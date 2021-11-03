@@ -1,3 +1,7 @@
+0.0.17
+
+- fixed some minor issue
+
 0.0.16
 
 - refactoring: input for each ingredient is generated dynamically
