@@ -115,7 +115,10 @@ mainModule <- function(input, output, session){
          X = 1:rv$n,
          FUN = function(i) {
 
-            req(paste0("#", session$ns("product"), rv$n))
+            validate(
+               need(paste0("#", session$ns("product"), rv$n),
+                    message = "Wybierz produkt")
+               )
 
             list_of_products <- list()
             for (i in 1:rv$n) {
@@ -126,7 +129,6 @@ mainModule <- function(input, output, session){
             for (i in 1:rv$n) {
                weight_of_products[[i]] <- as.numeric(input[[paste0("weight", i)]])
             }
-
 
             rv$out_kcalMeal <-
                energy_of_meal(list_of_products, weight_of_products)
@@ -155,6 +157,7 @@ mainModule <- function(input, output, session){
 
       req(rv$out_macroMeal)
 
+      #browser()
 
       output_macroMeal <- lapply(
          1:rv$n,
@@ -169,7 +172,7 @@ mainModule <- function(input, output, session){
          }
       )
 
-      req(any(unlist(output_macroMeal)), cancelOutput = TRUE)
+      req(all(unlist(output_macroMeal)), cancelOutput = TRUE)
 
       macro_pie_chart(rv$out_macroMeal)
    })

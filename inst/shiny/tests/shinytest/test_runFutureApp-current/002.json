@@ -36,8 +36,15 @@
     "sidebarItemExpanded": null
   },
   "output": {
-    "main_module-glycemicIndex": "Indeks glikemiczny posilku wynosi 60.",
-    "main_module-kcalMeal": "Kalorycznosc posilku wynosi 1514.4 kcal.",
+    "main_module-glycemicIndex": {
+      "message": "Wybierz produkt",
+      "call": "NULL",
+      "type": [
+        "shiny.silent.error",
+        "validation"
+      ]
+    },
+    "main_module-kcalMeal": "Kalorycznosc posilku wynosi 501.7 kcal.",
     "main_module-percentMacro": {
       "x": {
         "layout": {
@@ -73,9 +80,9 @@
               "carbohydrates"
             ],
             "values": [
-              11.15,
-              49.94,
-              38.91
+              10.02,
+              42.67,
+              47.31
             ],
             "textposition": [
               "inside",
@@ -96,9 +103,9 @@
               "text"
             ],
             "text": [
-              "26  gram",
-              "116.4  gram",
-              "90.7  gram"
+              "8.2  gram",
+              "34.9  gram",
+              "38.7  gram"
             ],
             "marker": {
               "color": "rgba(31,119,180,1)",

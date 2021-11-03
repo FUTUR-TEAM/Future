@@ -89,7 +89,7 @@ glycemic_index_of_meal <- function(list_of_products, weight_of_products){
   sum_IG_of_meal <- sum(dataframe_IG$IG_of_product)
 
   if (is.nan(sum_IG_of_meal)){
-    print(0)
+    return(0)
   } else {
     sum_IG_of_meal
   }
