@@ -4,7 +4,9 @@
 #'
 #' @import shinydashboard
 #' @import shiny
+#' @import shinyjs
 #' @import shinyFeedback
+#' @import datatable
 #'
 #' @export
 mainModuleUI <- function(id){
@@ -25,14 +27,29 @@ mainModuleUI <- function(id){
                                          "Dodaj kolejny produkt"),
                 div(id = ns("placeholder"))),
             column(5, offset = 1,
-                shinyWidgets::actionBttn(inputId = ns("click"),
-                                                        label = "Oblicz",
-                                                        size = "sm",
-                                                        style = "jelly",
-                                                        color = "success"),
-                verbatimTextOutput(ns("kcalMeal")),
-                plotly::plotlyOutput(ns("percentMacro")),
-                verbatimTextOutput(ns("glycemicIndex")))
+                   shinyWidgets::actionBttn(
+                      inputId = ns("click"),
+                      label = "Oblicz",
+                      size = "sm",
+                      style = "jelly",
+                      color = "success"
+                   ),
+                   verbatimTextOutput(ns("kcalMeal")),
+                   plotly::plotlyOutput(ns("percentMacro")),
+                   verbatimTextOutput(ns("glycemicIndex")),
+                   shinyjs::hidden(
+                      textInput(inputId = ns("name_of_meal"),
+                                label = "nazwa posilku"),
+                      shinyWidgets::actionBttn(
+                         inputId = ns("save"),
+                         label = "Zapisz posilek",
+                         size = "sm",
+                         style = "jelly",
+                         color = "primary"
+                      )
+                   ),
+                   dataTableOutput(ns("list_of_meals")),
+                   dataTableOutput(ns("meta_data_of_meals")))
          )
       ))
 
@@ -54,7 +71,9 @@ mainModule <- function(input, output, session){
    shinyjs::addClass(selector = "body", class = "sidebar-collapse")
 
    rv <- reactiveValues(
-      n = 0
+      n = 0,
+      ingreadients_of_meal = data.table::data.table(list_of_products = NULL, weight_of_products = NULL),
+      list_of_meals = list()
    )
 
 ##### loading caloric table and updating inputs with data from table #####
@@ -87,7 +106,7 @@ mainModule <- function(input, output, session){
                    numericInput(
                       inputId = paste0(session$ns("weight"), rv$n),
                       label = "Wpisz gramature produktu",
-                      value = 0
+                      value = 100
                       )),
             shinyWidgets::actionBttn(inputId = paste0(session$ns("remove"), rv$n),
                                      label = "usun produkt",
@@ -107,6 +126,7 @@ mainModule <- function(input, output, session){
                 rv$n <- rv$n - 1
              })
           })
+
 
 ##### creating lists for calculating energy of meal #####
 
@@ -138,26 +158,47 @@ mainModule <- function(input, output, session){
 
             rv$out_glycemicIndex <-
                glycemic_index_of_meal(list_of_products, weight_of_products)
+
+            shinyjs::show("name_of_meal")
+            shinyjs::show("save")
          }
       )
-
    })
+
+##### saving a list of ingredients of the prepared meal #####
+
+      observeEvent(input$save, {
+
+               list_of_products <- list()
+               for (i in 1:rv$n) {
+                  list_of_products[[i]] <- input[[paste0("product", i)]]
+               }
+
+               weight_of_products <- list()
+               for (i in 1:rv$n) {
+                  weight_of_products[[i]] <- as.numeric(input[[paste0("weight", i)]])
+               }
+
+               rv$ingreadients_of_meal <-
+                  rbind(rv$ingreadients_of_meal, data.table::data.table(list_of_products, weight_of_products))
+
+
+               rv$list_of_meals[[length(rv$list_of_meals) + 1]] <- input$name_of_meal
+      })
 
 ##### displaying energy of preparing meal #####
 
-      output$kcalMeal <- renderText({
-         validate(
-            need(input[[paste0("product", rv$n)]],
-                 message = "Wybierz produkt")
-         )
-         paste("Kalorycznosc posilku wynosi", rv$out_kcalMeal, "kcal.")
-      })
+   output$kcalMeal <- renderText({
+
+      validate(need(input[[paste0("product", rv$n)]],
+                    message = "Wybierz produkt"))
+
+      paste("Kalorycznosc posilku wynosi", rv$out_kcalMeal, "kcal.")
+   })
 
    output$percentMacro <- plotly::renderPlotly({
 
       req(rv$out_macroMeal)
-
-      #browser()
 
       output_macroMeal <- lapply(
          1:rv$n,
@@ -177,10 +218,19 @@ mainModule <- function(input, output, session){
       macro_pie_chart(rv$out_macroMeal)
    })
 
-      output$glycemicIndex <- renderText({
-         validate(
-            need(rv$out_glycemicIndex, message = "Wybierz produkt")
+   output$glycemicIndex <- renderText({
+      validate(
+         need(rv$out_glycemicIndex, message = "Wybierz produkt")
          )
-         paste0("Indeks glikemiczny posilku wynosi ", rv$out_glycemicIndex, ".")
-      })
+
+      paste0("Indeks glikemiczny posilku wynosi ", rv$out_glycemicIndex, ".")
+   })
+
+   output$list_of_meals <- renderDataTable({
+      data.table::data.table(rv$ingreadients_of_meal)
+   })
+
+   output$meta_data_of_meals <- renderDataTable({
+      data.table::data.table(rv$list_of_meals)
+   })
 }
