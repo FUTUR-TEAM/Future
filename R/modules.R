@@ -7,6 +7,7 @@
 #' @import shinyjs
 #' @import shinyFeedback
 #' @import datatable
+#' @import DT
 #'
 #' @export
 mainModuleUI <- function(id){
@@ -15,46 +16,59 @@ mainModuleUI <- function(id){
 
    header <- dashboardHeader(title = "Future")
 
-   sidebar <- dashboardSidebar()
+   sidebar <- dashboardSidebar(sidebarMenu(
+      menuItem("Tworzenie posilku", tabName = "tworzenie_posilku"),
+      menuItem("Zapisane posilki", tabName = "zapisz_posilek")
+   ))
 
    body <- dashboardBody(
-      fluidPage(
-         shinyFeedback::useShinyFeedback(),
-         shinyjs::useShinyjs(),
-         fluidRow(
-            column(6,
-                shinyWidgets::actionBttn(inputId = ns("add_one"),
-                                         "Dodaj kolejny produkt"),
-                div(id = ns("placeholder"))),
-            column(5, offset = 1,
-                   shinyWidgets::actionBttn(
-                      inputId = ns("click"),
-                      label = "Oblicz",
-                      size = "sm",
-                      style = "jelly",
-                      color = "success"
-                   ),
-                   verbatimTextOutput(ns("kcalMeal")),
-                   plotly::plotlyOutput(ns("percentMacro")),
-                   verbatimTextOutput(ns("glycemicIndex")),
-                   shinyjs::hidden(
-                      textInput(inputId = ns("name_of_meal"),
-                                label = "nazwa posilku"),
-                      shinyWidgets::actionBttn(
-                         inputId = ns("save"),
-                         label = "Zapisz posilek",
-                         size = "sm",
-                         style = "jelly",
-                         color = "primary"
-                      )
-                   ),
+      tabItems(
+         tabItem(tabName = "tworzenie_posilku",
+                 fluidPage(
+                    shinyFeedback::useShinyFeedback(),
+                    shinyjs::useShinyjs(),
+                    fluidRow(
+                       column(6,
+                              shinyWidgets::actionBttn(inputId = ns("add_one"),
+                                                       "Dodaj kolejny produkt"),
+                              div(id = ns("placeholder"))),
+                       column(5, offset = 1,
+                              shinyWidgets::actionBttn(
+                                 inputId = ns("click"),
+                                 label = "Oblicz",
+                                 size = "sm",
+                                 style = "jelly",
+                                 color = "success"
+                              ),
+                              verbatimTextOutput(ns("kcalMeal")),
+                              plotly::plotlyOutput(ns("percentMacro")),
+                              verbatimTextOutput(ns("glycemicIndex")),
+                              shinyjs::hidden(textInput(
+                                 inputId = ns("name_of_meal"),
+                                 label = "nazwa posilku")),
+                              shinyjs::hidden(
+                                 shinyWidgets::actionBttn(
+                                    inputId = ns("save"),
+                                    label = "Zapisz posilek",
+                                    size = "sm",
+                                    style = "jelly",
+                                    color = "primary"
+                                 )
+                              ))
+                       )
+                    )
+                 ),
+
+         tabItem(tabName = "zapisz_posilek",
                    dataTableOutput(ns("list_of_meals")),
-                   dataTableOutput(ns("meta_data_of_meals")))
-         )
+                   DT::DTOutput(ns("meta_data_of_meals"))
+                   )
       ))
 
-   dashboardPage(header, sidebar, body)
 
+   dashboardPage(dashboardHeader(title = "Future"),
+                 sidebar,
+                 body)
 }
 
 #' @title Server part of module for calculating energy of meal
@@ -67,8 +81,6 @@ mainModuleUI <- function(id){
 #'
 #' @export
 mainModule <- function(input, output, session){
-
-   shinyjs::addClass(selector = "body", class = "sidebar-collapse")
 
    rv <- reactiveValues(
       n = 0,
@@ -179,14 +191,16 @@ mainModule <- function(input, output, session){
                   weight_of_products[[i]] <- as.numeric(input[[paste0("weight", i)]])
                }
 
-               info_about_prepared_meal <- cbind(input$name_of_meal,
-                                           data.table::data.table(list_of_products,
-                                                                  weight_of_products))
+               info_about_prepared_meal <-
+                  cbind(input$name_of_meal,
+                        data.table::data.table(list_of_products,
+                                               weight_of_products))
 
                rv$ingreadients_of_meal <-
                   rbind(rv$ingreadients_of_meal,
-                        info_about_prepared_meal
-                        )
+                        info_about_prepared_meal)
+
+               colnames(rv$ingreadients_of_meal)[colnames(rv$ingreadients_of_meal) == "V1"] <- "nazwa posilku"
 
                rv$list_of_meals[[length(rv$list_of_meals) + 1]] <- input$name_of_meal
       })
@@ -235,7 +249,7 @@ mainModule <- function(input, output, session){
       data.table::data.table(rv$ingreadients_of_meal)
    })
 
-   output$meta_data_of_meals <- renderDataTable({
+   output$meta_data_of_meals <- DT::renderDT(
       data.table::data.table(rv$list_of_meals)
-   })
+      )
 }
