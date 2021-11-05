@@ -179,9 +179,14 @@ mainModule <- function(input, output, session){
                   weight_of_products[[i]] <- as.numeric(input[[paste0("weight", i)]])
                }
 
-               rv$ingreadients_of_meal <-
-                  rbind(rv$ingreadients_of_meal, data.table::data.table(list_of_products, weight_of_products))
+               info_about_prepared_meal <- cbind(input$name_of_meal,
+                                           data.table::data.table(list_of_products,
+                                                                  weight_of_products))
 
+               rv$ingreadients_of_meal <-
+                  rbind(rv$ingreadients_of_meal,
+                        info_about_prepared_meal
+                        )
 
                rv$list_of_meals[[length(rv$list_of_meals) + 1]] <- input$name_of_meal
       })
