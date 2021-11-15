@@ -181,6 +181,11 @@ mainModule <- function(input, output, session){
 
       observeEvent(input$save, {
 
+         if (input$name_of_meal %in% rv$meals_table) {
+
+            showNotification("Posilek o takiej nazwie juz istnieje", type = "error")
+
+         } else {
                list_of_products <- list()
                for (i in 1:rv$n) {
                   list_of_products[[i]] <- input[[paste0("product", i)]]
@@ -205,6 +210,7 @@ mainModule <- function(input, output, session){
                         info_about_prepared_meal)
 
                showNotification("Zapisano posilek.")
+         }
       })
 
 ##### displaying energy of preparing meal #####
