@@ -60,9 +60,9 @@ mainModuleUI <- function(id){
                  ),
 
          tabItem(tabName = "zapisz_posilek",
-                   dataTableOutput(ns("list_of_meals")),
-                   DT::DTOutput(ns("meta_data_of_meals"))
-                   )
+                 DT::dataTableOutput(ns("meta_data_of_meals")),
+                 dataTableOutput(ns("meals_table"))
+                 )
       ))
 
 
@@ -85,7 +85,7 @@ mainModule <- function(input, output, session){
    rv <- reactiveValues(
       n = 0,
       ingreadients_of_meal = data.table::data.table(list_of_products = NULL, weight_of_products = NULL),
-      list_of_meals = list()
+      meals_table = data.table::data.table(meal_name = NULL)
    )
 
 ##### loading caloric table and updating inputs with data from table #####
@@ -191,18 +191,18 @@ mainModule <- function(input, output, session){
                   weight_of_products[[i]] <- as.numeric(input[[paste0("weight", i)]])
                }
 
+               rv$meals_table <- rbind(rv$meals_table, data.table::data.table(meal_name = input$name_of_meal))
+
                info_about_prepared_meal <-
                   cbind(input$name_of_meal,
                         data.table::data.table(list_of_products,
                                                weight_of_products))
 
+               colnames(info_about_prepared_meal)[[1]] <- "meal_name"
+
                rv$ingreadients_of_meal <-
                   rbind(rv$ingreadients_of_meal,
                         info_about_prepared_meal)
-
-               colnames(rv$ingreadients_of_meal)[colnames(rv$ingreadients_of_meal) == "V1"] <- "nazwa posilku"
-
-               rv$list_of_meals[[length(rv$list_of_meals) + 1]] <- input$name_of_meal
       })
 
 ##### displaying energy of preparing meal #####
@@ -245,11 +245,18 @@ mainModule <- function(input, output, session){
       paste0("Indeks glikemiczny posilku wynosi ", rv$out_glycemicIndex, ".")
    })
 
-   output$list_of_meals <- renderDataTable({
-      data.table::data.table(rv$ingreadients_of_meal)
+   output$meta_data_of_meals <- DT::renderDataTable({
+      rv$meals_table
    })
 
-   output$meta_data_of_meals <- DT::renderDT(
-      data.table::data.table(rv$list_of_meals)
-      )
+   output$meals_table <- renderDataTable({
+
+      row_selected <- input$meta_data_of_meals_row_last_clicked
+
+      req(row_selected)
+
+      name_selected <- rv$meals_table[[row_selected, "meal_name"]]
+
+      rv$ingreadients_of_meal[rv$ingreadients_of_meal$meal_name == name_selected, ]
+   })
 }
