@@ -203,6 +203,8 @@ mainModule <- function(input, output, session){
                rv$ingreadients_of_meal <-
                   rbind(rv$ingreadients_of_meal,
                         info_about_prepared_meal)
+
+               showNotification("Zapisano posilek.")
       })
 
 ##### displaying energy of preparing meal #####
