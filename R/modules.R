@@ -97,6 +97,26 @@ mainModule <- function(input, output, session){
             header = TRUE
          )
 
+      observe({
+         if(system.file("ingreadients.tsv", package = "Future") != ""){
+            rv$ingreadients_of_meal <- utils::read.table(
+               system.file("ingreadients.tsv", package = "Future"),
+               header = TRUE,
+               fill = TRUE,
+               sep = "\t"
+            )
+         }
+
+         if(system.file("meals.tsv", package = "Future") != ""){
+         rv$meals_table <- utils::read.table(
+            system.file("meals.tsv", package = "Future"),
+            header = TRUE,
+            fill = TRUE,
+            sep = "\t"
+         )
+         }
+      })
+
 ##### adding new products for the meal #####
 
    observeEvent(input$add_one, {
@@ -181,7 +201,7 @@ mainModule <- function(input, output, session){
 
       observeEvent(input$save, {
 
-         if (input$name_of_meal %in% rv$meals_table) {
+      if (input$name_of_meal %in% rv$meals_table$meal_name) {
 
             showNotification("Posilek o takiej nazwie juz istnieje", type = "error")
 
@@ -200,14 +220,28 @@ mainModule <- function(input, output, session){
 
                info_about_prepared_meal <-
                   cbind(input$name_of_meal,
-                        data.table::data.table(list_of_products,
-                                               weight_of_products))
+                        data.table::data.table(list_of_products = unlist(list_of_products),
+                                               weight_of_products = unlist(weight_of_products)))
 
                colnames(info_about_prepared_meal)[[1]] <- "meal_name"
 
                rv$ingreadients_of_meal <-
                   rbind(rv$ingreadients_of_meal,
                         info_about_prepared_meal)
+
+               utils::write.table(
+                  rv$meals_table,
+                  file = file.path(system.file(package = "Future"), "meals.tsv"),
+                  sep = "\t",
+                  row.names = FALSE
+               )
+
+               utils::write.table(
+                  rv$ingreadients_of_meal,
+                  file = file.path(system.file(package = "Future"), "ingreadients.tsv"),
+                  sep = "\t",
+                  row.names = FALSE
+               )
 
                showNotification("Zapisano posilek.")
          }
@@ -254,6 +288,7 @@ mainModule <- function(input, output, session){
    })
 
    output$meta_data_of_meals <- DT::renderDataTable({
+
       rv$meals_table
    })
 
