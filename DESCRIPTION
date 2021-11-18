@@ -20,7 +20,8 @@ Imports:
     magrittr,
     utils,
     ggplot2,
-    plotly
+    plotly,
+    DT
 Suggests: 
     shinytest,
     testthat (>= 3.0.0),

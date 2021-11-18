@@ -1,3 +1,8 @@
+0.0.18
+
+- added button: save
+- added loading and saving tables to files
+
 0.0.17
 
 - fixed some minor issue
