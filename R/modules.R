@@ -6,7 +6,6 @@
 #' @import shiny
 #' @import shinyjs
 #' @import shinyFeedback
-#' @import datatable
 #' @import DT
 #'
 #' @export
@@ -138,7 +137,7 @@ mainModule <- function(input, output, session){
                    numericInput(
                       inputId = paste0(session$ns("weight"), rv$n),
                       label = "Wpisz gramature produktu",
-                      value = 100
+                      value = 0
                       )),
             shinyWidgets::actionBttn(inputId = paste0(session$ns("remove"), rv$n),
                                      label = "usun produkt",
