@@ -4,7 +4,7 @@
 #'
 #' @import shinydashboard
 #' @import shiny
-#' @import shinyFeedback
+
 #'
 #' @export
 mainModuleUI <- function(id){
@@ -13,31 +13,59 @@ mainModuleUI <- function(id){
 
    header <- dashboardHeader(title = "Future")
 
-   sidebar <- dashboardSidebar()
+   sidebar <- dashboardSidebar(sidebarMenu(
+      menuItem("Tworzenie posilku", tabName = "tworzenie_posilku"),
+      menuItem("Zapisane posilki", tabName = "zapisz_posilek")
+   ))
 
    body <- dashboardBody(
-      fluidPage(
-         shinyFeedback::useShinyFeedback(),
-         shinyjs::useShinyjs(),
-         fluidRow(
-            column(6,
-                shinyWidgets::actionBttn(inputId = ns("add_one"),
-                                         "Dodaj kolejny produkt"),
-                div(id = ns("placeholder"))),
-            column(5, offset = 1,
-                shinyWidgets::actionBttn(inputId = ns("click"),
-                                                        label = "Oblicz",
-                                                        size = "sm",
-                                                        style = "jelly",
-                                                        color = "success"),
-                verbatimTextOutput(ns("kcalMeal")),
-                plotly::plotlyOutput(ns("percentMacro")),
-                verbatimTextOutput(ns("glycemicIndex")))
-         )
+      tabItems(
+         tabItem(tabName = "tworzenie_posilku",
+                 fluidPage(
+                    shinyFeedback::useShinyFeedback(),
+                    shinyjs::useShinyjs(),
+                    fluidRow(
+                       column(6,
+                              shinyWidgets::actionBttn(inputId = ns("add_one"),
+                                                       "Dodaj kolejny produkt"),
+                              div(id = ns("placeholder"))),
+                       column(5, offset = 1,
+                              shinyWidgets::actionBttn(
+                                 inputId = ns("click"),
+                                 label = "Oblicz",
+                                 size = "sm",
+                                 style = "jelly",
+                                 color = "success"
+                              ),
+                              verbatimTextOutput(ns("kcalMeal")),
+                              plotly::plotlyOutput(ns("percentMacro")),
+                              verbatimTextOutput(ns("glycemicIndex")),
+                              shinyjs::hidden(textInput(
+                                 inputId = ns("name_of_meal"),
+                                 label = "nazwa posilku")),
+                              shinyjs::hidden(
+                                 shinyWidgets::actionBttn(
+                                    inputId = ns("save"),
+                                    label = "Zapisz posilek",
+                                    size = "sm",
+                                    style = "jelly",
+                                    color = "primary"
+                                 )
+                              ))
+                       )
+                    )
+                 ),
+
+         tabItem(tabName = "zapisz_posilek",
+                 DT::DTOutput(ns("meta_data_of_meals")),
+                 dataTableOutput(ns("meals_table"))
+                 )
       ))
 
-   dashboardPage(header, sidebar, body)
 
+   dashboardPage(dashboardHeader(title = "Future"),
+                 sidebar,
+                 body)
 }
 
 #' @title Server part of module for calculating energy of meal
@@ -51,10 +79,10 @@ mainModuleUI <- function(id){
 #' @export
 mainModule <- function(input, output, session){
 
-   shinyjs::addClass(selector = "body", class = "sidebar-collapse")
-
    rv <- reactiveValues(
-      n = 0
+      n = 0,
+      ingreadients_of_meal = data.table::data.table(list_of_products = NULL, weight_of_products = NULL),
+      meals_table = data.table::data.table(meal_name = NULL)
    )
 
 ##### loading caloric table and updating inputs with data from table #####
@@ -65,6 +93,26 @@ mainModule <- function(input, output, session){
             sep = ";",
             header = TRUE
          )
+
+      observe({
+         if(system.file("ingreadients.tsv", package = "Future") != ""){
+            rv$ingreadients_of_meal <- utils::read.table(
+               system.file("ingreadients.tsv", package = "Future"),
+               header = TRUE,
+               fill = TRUE,
+               sep = "\t"
+            )
+         }
+
+         if(system.file("meals.tsv", package = "Future") != ""){
+         rv$meals_table <- utils::read.table(
+            system.file("meals.tsv", package = "Future"),
+            header = TRUE,
+            fill = TRUE,
+            sep = "\t"
+         )
+         }
+      })
 
 ##### adding new products for the meal #####
 
@@ -108,6 +156,7 @@ mainModule <- function(input, output, session){
              })
           })
 
+
 ##### creating lists for calculating energy of meal #####
 
    observeEvent(input$click, {
@@ -138,26 +187,79 @@ mainModule <- function(input, output, session){
 
             rv$out_glycemicIndex <-
                glycemic_index_of_meal(list_of_products, weight_of_products)
+
+            shinyjs::show("name_of_meal")
+            shinyjs::show("save")
          }
       )
-
    })
+
+##### saving a list of ingredients of the prepared meal #####
+
+      observeEvent(input$save, {
+
+      if (input$name_of_meal %in% rv$meals_table$meal_name) {
+
+            showNotification("Posilek o takiej nazwie juz istnieje", type = "error")
+
+         } else {
+               list_of_products <- list()
+               for (i in 1:rv$n) {
+                  list_of_products[[i]] <- input[[paste0("product", i)]]
+               }
+
+               weight_of_products <- list()
+               for (i in 1:rv$n) {
+                  weight_of_products[[i]] <- as.numeric(input[[paste0("weight", i)]])
+               }
+
+               rv$meals_table <- rbind(rv$meals_table, data.table::data.table(meal_name = input$name_of_meal))
+
+               info_about_prepared_meal <-
+                  cbind(input$name_of_meal,
+                        data.table::data.table(list_of_products = unlist(list_of_products),
+                                               weight_of_products = unlist(weight_of_products)))
+
+               colnames(info_about_prepared_meal)[[1]] <- "meal_name"
+
+               rv$ingreadients_of_meal <-
+                  rbind(rv$ingreadients_of_meal,
+                        info_about_prepared_meal)
+
+               utils::write.table(
+                  rv$meals_table,
+
+##### TODO: possibility to change file path #####
+
+                  file = file.path(system.file(package = "Future"), "meals.tsv"),
+                  sep = "\t",
+                  row.names = FALSE
+               )
+
+               utils::write.table(
+                  rv$ingreadients_of_meal,
+                  file = file.path(system.file(package = "Future"), "ingreadients.tsv"),
+                  sep = "\t",
+                  row.names = FALSE
+               )
+
+               showNotification("Zapisano posilek.")
+         }
+      })
 
 ##### displaying energy of preparing meal #####
 
-      output$kcalMeal <- renderText({
-         validate(
-            need(input[[paste0("product", rv$n)]],
-                 message = "Wybierz produkt")
-         )
-         paste("Kalorycznosc posilku wynosi", rv$out_kcalMeal, "kcal.")
-      })
+   output$kcalMeal <- renderText({
+
+      validate(need(input[[paste0("product", rv$n)]],
+                    message = "Wybierz produkt"))
+
+      paste("Kalorycznosc posilku wynosi", rv$out_kcalMeal, "kcal.")
+   })
 
    output$percentMacro <- plotly::renderPlotly({
 
       req(rv$out_macroMeal)
-
-      #browser()
 
       output_macroMeal <- lapply(
          1:rv$n,
@@ -177,10 +279,27 @@ mainModule <- function(input, output, session){
       macro_pie_chart(rv$out_macroMeal)
    })
 
-      output$glycemicIndex <- renderText({
-         validate(
-            need(rv$out_glycemicIndex, message = "Wybierz produkt")
+   output$glycemicIndex <- renderText({
+      validate(
+         need(rv$out_glycemicIndex, message = "Wybierz produkt")
          )
-         paste0("Indeks glikemiczny posilku wynosi ", rv$out_glycemicIndex, ".")
-      })
+
+      paste0("Indeks glikemiczny posilku wynosi ", rv$out_glycemicIndex, ".")
+   })
+
+   output$meta_data_of_meals <- DT::renderDT({
+
+      rv$meals_table
+   })
+
+   output$meals_table <- renderDataTable({
+
+      row_selected <- input$meta_data_of_meals_row_last_clicked
+
+      req(row_selected)
+
+      name_selected <- rv$meals_table[[row_selected, "meal_name"]]
+
+      rv$ingreadients_of_meal[rv$ingreadients_of_meal$meal_name == name_selected, ]
+   })
 }

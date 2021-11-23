@@ -6,6 +6,9 @@ app$waitForShiny()
 
 app$click("main_module-add_one")
 app$waitForShiny()
+
+##### app loaded longer time, so it need additional time  #####
+Sys.sleep(1)
 app$setValue(name = "main_module-product1", value = "Banan")
 app$setValue(name = "main_module-weight1", value = 100)
 app$click("main_module-click")
@@ -34,6 +37,7 @@ app$waitForShiny()
 app$setValue(name = "main_module-product5", value = "Czekolada gorzka")
 app$setValue(name = "main_module-weight5", value = 100)
 app$waitForShiny()
+Sys.sleep(1)
 app$click("main_module-click")
 
 app$snapshot()
