@@ -228,6 +228,9 @@ mainModule <- function(input, output, session){
 
                utils::write.table(
                   rv$meals_table,
+
+##### TODO: possibility to change file path #####
+
                   file = file.path(system.file(package = "Future"), "meals.tsv"),
                   sep = "\t",
                   row.names = FALSE
