@@ -12,22 +12,22 @@ Depends:
     shiny,
     shinydashboard
 Imports:
-    dplyr,
     assertthat,
+    data.table,
+    dplyr,
+    DT,
+    ggplot2,
+    magrittr,
+    plotly,
+    shinyFeedback,
     shinyjs,
     shinyWidgets,
-    shinyFeedback,
-    magrittr,
-    utils,
-    ggplot2,
-    plotly,
-    DT,
-    data.table
+    utils
 Suggests: 
-    shinytest,
-    testthat (>= 3.0.0),
     covr,
     knitr,
-    rmarkdown
+    rmarkdown,
+    shinytest,
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 RoxygenNote: 7.1.1
