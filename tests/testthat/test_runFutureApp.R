@@ -6,6 +6,8 @@ app$waitForShiny()
 
 app$click("main_module-add_one")
 app$waitForShiny()
+
+##### app loaded longer time, so it need additional time  #####
 Sys.sleep(1)
 app$setValue(name = "main_module-product1", value = "Banan")
 app$setValue(name = "main_module-weight1", value = 100)
