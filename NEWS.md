@@ -2,6 +2,7 @@
 
 - added button: save
 - added loading and saving tables to files
+- changed layout: inserted modules in tabs
 
 0.0.17
 
