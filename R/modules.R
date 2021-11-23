@@ -4,10 +4,7 @@
 #'
 #' @import shinydashboard
 #' @import shiny
-#' @import shinyjs
-#' @import shinyFeedback
-#' @import DT
-#' @import data.table
+
 #'
 #' @export
 mainModuleUI <- function(id){
@@ -60,7 +57,7 @@ mainModuleUI <- function(id){
                  ),
 
          tabItem(tabName = "zapisz_posilek",
-                 DT::dataTableOutput(ns("meta_data_of_meals")),
+                 DT::DTOutput(ns("meta_data_of_meals")),
                  dataTableOutput(ns("meals_table"))
                  )
       ))
@@ -287,7 +284,7 @@ mainModule <- function(input, output, session){
       paste0("Indeks glikemiczny posilku wynosi ", rv$out_glycemicIndex, ".")
    })
 
-   output$meta_data_of_meals <- DT::renderDataTable({
+   output$meta_data_of_meals <- DT::renderDT({
 
       rv$meals_table
    })
