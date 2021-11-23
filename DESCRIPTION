@@ -21,7 +21,8 @@ Imports:
     utils,
     ggplot2,
     plotly,
-    DT
+    DT,
+    data.table
 Suggests: 
     shinytest,
     testthat (>= 3.0.0),

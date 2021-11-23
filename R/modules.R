@@ -7,6 +7,7 @@
 #' @import shinyjs
 #' @import shinyFeedback
 #' @import DT
+#' @import data.table
 #'
 #' @export
 mainModuleUI <- function(id){
