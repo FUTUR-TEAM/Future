@@ -1,3 +1,7 @@
+0.0.19
+
+- updated numeric input 
+
 0.0.18
 
 - added button: save
