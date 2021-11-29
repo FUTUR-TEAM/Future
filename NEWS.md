@@ -1,3 +1,7 @@
+0.0.19
+
+- added logs
+
 0.0.18
 
 - added button: save
