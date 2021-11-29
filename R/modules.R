@@ -79,6 +79,20 @@ mainModuleUI <- function(id){
 #' @export
 mainModule <- function(input, output, session){
 
+
+
+   log4r_logger <- log4r::logger(threshold = "INFO")
+
+   log4r_info <- function(msg) {
+      log4r::info(log4r_logger, msg)
+   }
+
+   log4r_debug <- function(msg) {
+      log4r::debug(log4r_logger, msg)
+   }
+
+
+
    rv <- reactiveValues(
       n = 0,
       ingreadients_of_meal = data.table::data.table(list_of_products = NULL, weight_of_products = NULL),
@@ -95,7 +109,8 @@ mainModule <- function(input, output, session){
          )
 
       observe({
-         if(system.file("ingreadients.tsv", package = "Future") != ""){
+         log4r_debug("loading ingreadients.tsv")
+         if (system.file("ingreadients.tsv", package = "Future") != "") {
             rv$ingreadients_of_meal <- utils::read.table(
                system.file("ingreadients.tsv", package = "Future"),
                header = TRUE,
@@ -104,6 +119,12 @@ mainModule <- function(input, output, session){
             )
          }
 
+##### this is placeholder!!!! It will be replaced with a more mature solution in the future #####
+         if (T) {
+            log4r_info("ingreadients.tsv loaded successfully")
+         }
+
+         log4r_debug("loading meals.tsv")
          if(system.file("meals.tsv", package = "Future") != ""){
          rv$meals_table <- utils::read.table(
             system.file("meals.tsv", package = "Future"),
@@ -112,11 +133,15 @@ mainModule <- function(input, output, session){
             sep = "\t"
          )
          }
+         if (T) {
+            log4r_info("meals.tsv loaded successfully")
+         }
       })
 
 ##### adding new products for the meal #####
 
    observeEvent(input$add_one, {
+      log4r_debug("adding box for adding new product")
       rv$n <- rv$n + 1
 
       insertUI(
@@ -141,6 +166,9 @@ mainModule <- function(input, output, session){
                                      label = "usun produkt",
                                      color = "danger")
          ))
+      if (T) {
+         log4r_info("box for adding new product added successfully")
+      }
    })
 
       lapply(X = 1:100,
@@ -160,6 +188,7 @@ mainModule <- function(input, output, session){
 ##### creating lists for calculating energy of meal #####
 
    observeEvent(input$click, {
+      log4r_debug("calculating parameters of meal")
       lapply(
          X = 1:rv$n,
          FUN = function(i) {
@@ -192,13 +221,17 @@ mainModule <- function(input, output, session){
             shinyjs::show("save")
          }
       )
+      if (T) {
+         log4r_info("parameters of meal calculated successfully")
+      }
    })
 
 ##### saving a list of ingredients of the prepared meal #####
 
       observeEvent(input$save, {
+         log4r_debug("saving a list of ingreadients of the prepared meal")
 
-      if (input$name_of_meal %in% rv$meals_table$meal_name) {
+         if (input$name_of_meal %in% rv$meals_table$meal_name) {
 
             showNotification("Posilek o takiej nazwie juz istnieje", type = "error")
 
@@ -245,22 +278,30 @@ mainModule <- function(input, output, session){
 
                showNotification("Zapisano posilek.")
          }
+         if (T) {
+            log4r_info("list of ingreadients of the prepared meal saved successfully")
+         }
       })
 
 ##### displaying energy of preparing meal #####
 
    output$kcalMeal <- renderText({
+      log4r_debug("calculating energy of the prepared meal")
 
       validate(need(input[[paste0("product", rv$n)]],
                     message = "Wybierz produkt"))
+
+      if (T) {
+         log4r_info("energy of the prepared meal calculated successfully")
+      }
 
       paste("Kalorycznosc posilku wynosi", rv$out_kcalMeal, "kcal.")
    })
 
    output$percentMacro <- plotly::renderPlotly({
+      log4r_debug("preparing plot with macronutrietns of the prepared meal")
 
       req(rv$out_macroMeal)
-
       output_macroMeal <- lapply(
          1:rv$n,
          FUN = function(x) {
@@ -273,32 +314,49 @@ mainModule <- function(input, output, session){
             out_macroMeal_exist
          }
       )
-
       req(all(unlist(output_macroMeal)), cancelOutput = TRUE)
+
+      if (T) {
+         log4r_info("plot with macronutrietns of the prepared meal prepared successfully")
+      }
 
       macro_pie_chart(rv$out_macroMeal)
    })
 
    output$glycemicIndex <- renderText({
+      log4r_debug("calculating glycemic index of the prepared meal")
+
       validate(
          need(rv$out_glycemicIndex, message = "Wybierz produkt")
          )
+
+      if (T) {
+         log4r_info("glycemic index of the prepared meal calculated successfully")
+      }
 
       paste0("Indeks glikemiczny posilku wynosi ", rv$out_glycemicIndex, ".")
    })
 
    output$meta_data_of_meals <- DT::renderDT({
+      log4r_debug("preparing data table with saved meals")
+
+      if (T) {
+         log4r_info("data table with saved meals prepared successfully")
+      }
 
       rv$meals_table
    })
 
    output$meals_table <- renderDataTable({
+      log4r_debug("preparing data table with ingreadients of saved meal")
 
       row_selected <- input$meta_data_of_meals_row_last_clicked
-
       req(row_selected)
-
       name_selected <- rv$meals_table[[row_selected, "meal_name"]]
+
+      if (T) {
+         log4r_info("data table with ingreadients of saved meal preparing successfully")
+      }
 
       rv$ingreadients_of_meal[rv$ingreadients_of_meal$meal_name == name_selected, ]
    })
