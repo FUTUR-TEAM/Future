@@ -160,7 +160,7 @@ mainModule <- function(input, output, session){
                    numericInput(
                       inputId = paste0(session$ns("weight"), rv$n),
                       label = "Wpisz gramature produktu",
-                      value = 0
+                      value = ""
                       )),
             shinyWidgets::actionBttn(inputId = paste0(session$ns("remove"), rv$n),
                                      label = "usun produkt",
