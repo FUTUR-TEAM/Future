@@ -77,11 +77,11 @@ mainModuleUI <- function(id){
 #' @param session shiny session
 #'
 #' @export
-mainModule <- function(input, output, session){
+mainModule <- function(input, output, session, logger_threshold = "INFO"){
 
 
 
-   log4r_logger <- log4r::logger(threshold = "INFO")
+   log4r_logger <- log4r::logger(threshold = logger_threshold)
 
    log4r_info <- function(msg) {
       log4r::info(log4r_logger, msg)
