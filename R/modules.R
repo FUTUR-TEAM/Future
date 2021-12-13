@@ -141,14 +141,14 @@ mainModule <- function(input, output, session, logger_threshold = "INFO"){
 ##### adding new products for the meal #####
 
    observeEvent(input$add_one, {
-      log4r_debug("adding box for adding new product")
+      log4r_debug("adding container for adding new product")
       rv$n <- rv$n + 1
 
       insertUI(
          selector = paste0("#", session$ns("placeholder")),
          where = "beforeEnd",
          ui = div(
-            id = paste0(session$ns("box"), rv$n),
+            id = paste0(session$ns("container"), rv$n),
             column(8,
                    shinyWidgets::pickerInput(
                       inputId = paste0(session$ns("product"), rv$n),
@@ -167,7 +167,7 @@ mainModule <- function(input, output, session, logger_threshold = "INFO"){
                                      color = "danger")
          ))
       if (T) {
-         log4r_info("box for adding new product added successfully")
+         log4r_info("container for adding new product added successfully")
       }
    })
 
@@ -175,9 +175,9 @@ mainModule <- function(input, output, session, logger_threshold = "INFO"){
           FUN = function(i){
 
              observeEvent(input[[paste0("remove", i)]],{
-                rv[[paste0("box", i)]] <- input[[paste0("remove", i)]]
+                rv[[paste0("container", i)]] <- input[[paste0("remove", i)]]
                 removeUI(
-                   selector = paste0("#", session$ns("box"), i)
+                   selector = paste0("#", session$ns("container"), i)
                 )
 
                 rv$n <- rv$n - 1
