@@ -1,3 +1,7 @@
+0.0.20
+
+- added logs
+
 0.0.19
 
 - updated numeric input 
