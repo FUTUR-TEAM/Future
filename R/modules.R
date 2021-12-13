@@ -75,6 +75,7 @@ mainModuleUI <- function(id){
 #' @param input shiny input
 #' @param output shiny output
 #' @param session shiny session
+#' @param logger_threshold threshold for logger
 #'
 #' @export
 mainModule <- function(input, output, session, logger_threshold = "INFO"){
