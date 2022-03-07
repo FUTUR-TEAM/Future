@@ -91,16 +91,15 @@ energy_of_product <- function(product, weight){
    assertthat::assert_that(assertthat::is.number(weight),
                            msg ="weight must be number")
 
-   total_product_info <- utils::read.table(system.file("caloric_table.txt", package = "Future"), sep = ";", header = T) %>%
-      dplyr::rename("Protein" = "Bialko", "Fat" = "Tluszcz", "Carbohydrates" = "Weglowodany") %>%
-      dplyr::filter(.data$Nazwa %in% product)
+   caloric_table <- load_data("caloric_table", "db") %>%
+      dplyr::filter(.data$Name %in% product)
    energy <- energy_total(weight_of_product = weight,
-                          protein = as.numeric(total_product_info$Protein),
-                          fat = as.numeric(total_product_info$Fat),
-                          carbohydrates = as.numeric(total_product_info$Carbohydrates),
+                          protein = as.numeric(caloric_table$Protein),
+                          fat = as.numeric(caloric_table$Fat),
+                          carbohydrates = as.numeric(caloric_table$Carbohydrates),
                           fiber = 0)
 
-   return(energy)
+   energy
 }
 
 #' @title Total energy value of the meal
