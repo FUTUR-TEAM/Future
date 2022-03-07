@@ -91,7 +91,7 @@ energy_of_product <- function(product, weight){
    assertthat::assert_that(assertthat::is.number(weight),
                            msg ="weight must be number")
 
-   caloric_table <- load_data("caloric_table", "db") %>%
+   caloric_table <- load_table("caloric_table", "db") %>%
       dplyr::filter(.data$Name %in% product)
    energy <- energy_total(weight_of_product = weight,
                           protein = as.numeric(caloric_table$Protein),

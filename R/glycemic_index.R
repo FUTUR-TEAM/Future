@@ -18,7 +18,7 @@ glycemic_index <- function(product, weight){
   assertthat::assert_that(assertthat::is.number(weight),
                           msg = "weight must be number")
 
-  glycemic_info <- load_data("digestible_carbo", "db") %>%
+  glycemic_info <- load_table("digestible_carbo", "db") %>%
     dplyr::filter(.data$Name %in% product)
 
   if (NROW(glycemic_info) == 0) {
@@ -31,7 +31,7 @@ glycemic_index <- function(product, weight){
                      digestible_carbohydrates = glycemic_info$digestible_carbo * weight / 100
   )
 
-  glycemic_index_of_product <- load_data("IG_new", "db") %>%
+  glycemic_index_of_product <- load_table("IG_new", "db") %>%
     dplyr::filter(.data$Name %in% product)
 
     if (NROW(glycemic_index_of_product) == 0) {

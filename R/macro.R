@@ -18,7 +18,7 @@ macronutrients <- function(product, weight){
   assertthat::assert_that(assertthat::is.number(weight),
                           msg = "weight must be number")
 
-  product_info <- load_data("caloric_table", "db") %>%
+  product_info <- load_table("caloric_table", "db") %>%
     dplyr::filter(.data$Name %in% product)
 
     macro_info <- list(product_name = product,
