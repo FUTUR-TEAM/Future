@@ -4,7 +4,7 @@
 \alias{mainModule}
 \title{Server part of module for calculating energy of meal}
 \usage{
-mainModule(input, output, session)
+mainModule(input, output, session, logger_threshold = "INFO")
 }
 \arguments{
 \item{input}{shiny input}
@@ -12,6 +12,8 @@ mainModule(input, output, session)
 \item{output}{shiny output}
 
 \item{session}{shiny session}
+
+\item{logger_threshold}{threshold for logger}
 }
 \description{
 Module for adding products and their weights to the meal.
