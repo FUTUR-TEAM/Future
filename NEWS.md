@@ -1,3 +1,8 @@
+0.0.21
+
+- added connection with database
+- changed columns names to English
+
 0.0.20
 
 - added logs
