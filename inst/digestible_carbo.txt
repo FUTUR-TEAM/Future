@@ -1,4 +1,4 @@
-"nazwa";"weglowodany";"blonnik";"przyswajalne_weglo"
+"Name";"Carbohydrates";"Fiber";"Digestible_carbo"
 "1";"Agrest";"11.8";"3";"8.8"
 "2";"Banan";"20";"1.7";"18.3"
 "3";"Bob";"14";"5.8";"8.2"

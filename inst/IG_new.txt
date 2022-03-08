@@ -1,4 +1,4 @@
-"nazwa";"IG"
+"Name";"IG"
 "1";"Ocet winny";"5"
 "2";"Awokado";"10"
 "3";"Agrest";"15"
