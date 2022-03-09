@@ -91,12 +91,15 @@ energy_of_product <- function(product, weight){
    assertthat::assert_that(assertthat::is.number(weight),
                            msg ="weight must be number")
 
-   caloric_table <- load_table("caloric_table", "db") %>%
-      dplyr::filter(.data$Name %in% product)
+   caloric_table <- load_data(table_name = "caloric_table",
+                              source = "db",
+                              selected_columns = c("name", "protein", "fat", "carbohydrates"),
+                              product = product)
+
    energy <- energy_total(weight_of_product = weight,
-                          protein = as.numeric(caloric_table$Protein),
-                          fat = as.numeric(caloric_table$Fat),
-                          carbohydrates = as.numeric(caloric_table$Carbohydrates),
+                          protein = as.numeric(caloric_table$protein),
+                          fat = as.numeric(caloric_table$fat),
+                          carbohydrates = as.numeric(caloric_table$carbohydrates),
                           fiber = 0)
 
    energy
