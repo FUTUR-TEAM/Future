@@ -6,6 +6,7 @@
 #' @param source string, file or db
 #'
 #' @import RSQLite
+#' @import DBI
 #'
 #' @examples
 #' load_data("caloric_table", "db")
@@ -24,10 +25,10 @@ load_table <- function(table_name, source){
     utils::read.table(system.file(paste0(table_name, ".txt"), package = "Future"), sep = ";", header = T)
 
   } else if (source == "db") {
-    con <- dbConnect(RSQLite::SQLite(), system.file("meta_info.db", package = "Future"))
+    con <- DBI::dbConnect(RSQLite::SQLite(), system.file("meta_info.db", package = "Future"))
 
-    out <- dbReadTable(con, table_name)
-    dbDisconnect(con)
+    out <- DBI::dbReadTable(con, table_name)
+    DBI::dbDisconnect(con)
     out
   }
 
@@ -41,12 +42,14 @@ load_table <- function(table_name, source){
 #' @param table_name string, name of table
 #' @param source string, file or db
 #' @param selected_columns character, names of selected columns
+#' @param product character, name of selected product
 #'
-#' @import RSQLite
+#' @import DBI
 #' @import dplyr
+#' @import RSQLite
 #'
 #' @examples
-#' load_data("caloric_table", "db", c("Protein", "Fat", "Carbohydrates"))
+#' load_data("caloric_table", "db", c("protein", "fat", "carbohydrates"), "Banan")
 #'
 #' @export
 load_data <- function(table_name, source, selected_columns, product){
@@ -68,18 +71,19 @@ load_data <- function(table_name, source, selected_columns, product){
       dplyr::select(selected_columns)
 
   } else if (source == "db") {
-    con <- dbConnect(RSQLite::SQLite(), system.file("meta_info.db", package = "Future"))
+    con <- DBI::dbConnect(RSQLite::SQLite(), system.file("meta_info.db", package = "Future"))
 
-    energy <- dbGetQuery(con,
-                         sprintf('SELECT %s
+    energy <- DBI::dbGetQuery(con,
+                              sprintf(
+                                'SELECT %s
                                     FROM %s
                                     WHERE "name" = "%s"
                                     ',
-                                 paste(selected_columns, collapse = ", "),
-                                 paste(table_name),
-                                 product)
-    )
-    dbDisconnect(con)
+                                paste(selected_columns, collapse = ", "),
+                                paste(table_name),
+                                product
+                              ))
+    DBI::dbDisconnect(con)
 
     energy
   }
