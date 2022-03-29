@@ -18,14 +18,16 @@ macronutrients <- function(product, weight){
   assertthat::assert_that(assertthat::is.number(weight),
                           msg = "weight must be number")
 
-  product_info <- utils::read.table(system.file("caloric_table.txt", package = "Future"), sep = ";", header = T) %>%
-    dplyr::rename("Protein" = "Bialko", "Fat" = "Tluszcz", "Carbohydrates" = "Weglowodany") %>%
-    dplyr::filter(.data$Nazwa %in% product)
-  macro_info <- list(product_name = product,
+  product_info <- load_data(table_name = "caloric_table",
+                            source = "db",
+                            selected_columns = c("protein", "fat", "carbohydrates"),
+                            product = product)
+
+    macro_info <- list(product_name = product,
                      weight_of_product = weight,
-                     protein = as.numeric(product_info$Protein) * weight / 100,
-                     fat = as.numeric(product_info$Fat) * weight / 100,
-                     carbohydrates = as.numeric(product_info$Carbohydrates) * weight / 100
+                     protein = as.numeric(product_info$protein) * weight / 100,
+                     fat = as.numeric(product_info$fat) * weight / 100,
+                     carbohydrates = as.numeric(product_info$carbohydrates) * weight / 100
   )
   return(macro_info)
 }

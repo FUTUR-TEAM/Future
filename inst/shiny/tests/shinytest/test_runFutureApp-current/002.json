@@ -16,7 +16,6 @@
     },
     "main_module-add_one": 5,
     "main_module-click": 2,
-    "main_module-name_of_meal": "",
     "main_module-product1": "Banan",
     "main_module-product2": "Mango",
     "main_module-product3": "Awokado",
@@ -27,14 +26,13 @@
     "main_module-remove3": 0,
     "main_module-remove4": 0,
     "main_module-remove5": 0,
-    "main_module-save": 0,
     "main_module-weight1": 100,
     "main_module-weight2": 100,
     "main_module-weight3": 100,
     "main_module-weight4": 100,
     "main_module-weight5": 100,
     "plotly_afterplot-A": "\"main_module-percentMacro\"",
-    "sidebarCollapsed": false,
+    "sidebarCollapsed": true,
     "sidebarItemExpanded": null
   },
   "output": {

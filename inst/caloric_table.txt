@@ -1,4 +1,4 @@
-"Nazwa";"Energia";"Bialko";"Tluszcz";"Weglowodany"
+"name";"energy";"protein";"fat";"carbohydrates"
 "1";"Actimel, mleko jogurtowe";"88";"2.7";"1.5";"16"
 "2";"Advokat, likier";"280";"4.4";"6";"28.4"
 "3";"Agrest";"60";"1.2";"0.9";"11.8"

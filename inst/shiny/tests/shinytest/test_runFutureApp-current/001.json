@@ -2,12 +2,10 @@
   "input": {
     "main_module-add_one": 1,
     "main_module-click": 1,
-    "main_module-name_of_meal": "",
     "main_module-product1": "Banan",
     "main_module-remove1": 0,
-    "main_module-save": 0,
     "main_module-weight1": 100,
-    "sidebarCollapsed": false,
+    "sidebarCollapsed": true,
     "sidebarItemExpanded": null
   },
   "output": {
